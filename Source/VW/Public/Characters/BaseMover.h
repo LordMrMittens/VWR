@@ -34,12 +34,12 @@ protected:
 	float Rotation{ 0.0f };
 
 	void RotateAroundPoint(const FRotator RotationToAdd);
-	void Move(float Horizontal, float Vertical);
+	virtual void Move(float HorizontalDir, float VerticalDir, float DeltaSeconds);
 	float GetNormalisedRotation(float RawRotation);
 	void SetLookAt();
 	void SetInitialPosition(float InitialRotation);
-	float CalculateRotation(float HorizontalValue);
-	float CalculateAltitude(float VerticalValue);
+	float CalculateRotation(float HorizontalValue,float DeltaSeconds);
+	float CalculateAltitude(float VerticalValue, float DeltaSeconds);
 	void UpdatePosition(float IncomingRotation, float IncomingAltitude);
 	FVector GetInstancedSMPosition(float InRotation, float InAltitude);
 
