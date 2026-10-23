@@ -14,6 +14,6 @@ void ICharacterInterface::Die()
 {
 }
 
-void ICharacterInterface::GetHit(UProjectileCollision CollisionData)
+void ICharacterInterface::GetHit(FProjectileCollision CollisionData)
 {
 }

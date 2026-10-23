@@ -6,7 +6,7 @@
 #include "UObject/Interface.h"
 #include "CharacterInterface.generated.h"
 
-struct UProjectileCollision;
+struct FProjectileCollision;
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
 class UCharacterInterface : public UInterface
@@ -27,5 +27,5 @@ public:
 
 	virtual void Die();
 
-	virtual void GetHit(UProjectileCollision CollisionData);
+	virtual void GetHit(FProjectileCollision CollisionData);
 };
