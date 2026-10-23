@@ -21,4 +21,22 @@ APlayerCharacter::APlayerCharacter()
 	GunSpawnPoint = CreateDefaultSubobject<UBillboardComponent>(TEXT("Gun Spawn Point"));
 	GunSpawnPoint->SetupAttachment(GunMesh);
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
+
+}
+
+void APlayerCharacter::UpdateHealth(int Value)
+{
+	HealthComponent->UpdateHealth(Value);
+	
+}
+
+void APlayerCharacter::BeginPlay()
+{
+	checkf(IsValid(HealthComponent), TEXT("APlayerCharacter: HealthComponent not found!"));
+	HealthComponent->OnDeath.AddDynamic(this, &APlayerCharacter::DeathSequence);
+}
+
+void APlayerCharacter::DeathSequence()
+{
+	this->Destroy();
 }

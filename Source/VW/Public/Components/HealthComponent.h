@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "HealthComponent.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeath);
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class VW_API UHealthComponent : public UActorComponent
@@ -18,6 +19,8 @@ public:
 
 	UFUNCTION()
 	void UpdateHealth(int IncomingHealth);
+
+	FOnDeath OnDeath;
 
 protected:
 	// Called when the game starts

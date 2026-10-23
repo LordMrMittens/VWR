@@ -29,6 +29,6 @@ void UHealthComponent::UpdateHealth(int IncomingHealth)
 	FMath::Clamp(CurrentHealth, 0, MaxHealth);
 	if (CurrentHealth == 0)
 	{
-		//Die
+		OnDeath.Broadcast();
 	}
 }
