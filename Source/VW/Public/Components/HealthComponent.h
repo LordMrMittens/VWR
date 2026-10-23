@@ -32,6 +32,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Health")
 	int CurrentHealth{ 10 };
 
+	bool bIsDead{ false };
+
 public:
 	const int GetHealth() { return CurrentHealth; }
 
