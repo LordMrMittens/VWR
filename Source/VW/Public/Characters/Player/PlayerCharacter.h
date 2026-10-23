@@ -24,18 +24,18 @@ protected:
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Default Components")
-	UCapsuleComponent* CapsuleComponent;
+	TObjectPtr<UCapsuleComponent> CapsuleComponent;
 	UPROPERTY(EditAnywhere, Category = "Default Components")
-	UStaticMeshComponent* MainMesh;
+	TObjectPtr <UStaticMeshComponent> MainMesh;
 	UPROPERTY(EditAnywhere, Category = "Default Components")
-	UStaticMeshComponent* GunMesh;
+	TObjectPtr <UStaticMeshComponent> GunMesh;
 	UPROPERTY(EditAnywhere, Category = "Default Components")
-	USpringArmComponent* SpringArm;
+	TObjectPtr <USpringArmComponent> SpringArm;
 	UPROPERTY(EditAnywhere, Category = "Default Components")
-	UCameraComponent* Camera;
+	TObjectPtr <UCameraComponent> Camera;
 	UPROPERTY(EditAnywhere, Category = "Default Components")
-	UBillboardComponent* GunSpawnPoint;
+	TObjectPtr <UBillboardComponent> GunSpawnPoint;
 	UPROPERTY(EditAnywhere, Category = "Default Components")
-	UHealthComponent* HealthComponent;
+	TObjectPtr <UHealthComponent> HealthComponent;
 
 };

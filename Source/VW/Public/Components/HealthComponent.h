@@ -16,9 +16,22 @@ public:
 	// Sets default values for this component's properties
 	UHealthComponent();
 
+	UFUNCTION()
+	void UpdateHealth(int IncomingHealth);
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+private:
+	UPROPERTY(EditAnywhere, Category = "Health")
+	int MaxHealth{ 10 };
+	UPROPERTY(EditAnywhere, Category = "Health")
+	int CurrentHealth{ 10 };
+
+public:
+	const int GetHealth() { return CurrentHealth; }
+
 
 
 		

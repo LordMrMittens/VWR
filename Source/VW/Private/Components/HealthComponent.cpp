@@ -23,3 +23,12 @@ void UHealthComponent::BeginPlay()
 	
 }
 
+void UHealthComponent::UpdateHealth(int IncomingHealth)
+{
+	CurrentHealth += IncomingHealth;
+	FMath::Clamp(CurrentHealth, 0, MaxHealth);
+	if (CurrentHealth == 0)
+	{
+		//Die
+	}
+}
