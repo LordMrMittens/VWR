@@ -5,5 +5,6 @@
 
 void ABaseEnemy::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
 	Move(CurrentHorzDirection, CurrentVerticalDirection, DeltaTime);
 }

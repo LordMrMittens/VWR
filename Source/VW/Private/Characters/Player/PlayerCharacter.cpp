@@ -30,10 +30,17 @@ void APlayerCharacter::UpdateHealth(int Value)
 	
 }
 
+void APlayerCharacter::Move(float HorzDirection, float VertDirection, float DeltaTime)
+{
+	Super::Move(HorzDirection, 0.0f, DeltaTime);
+}
+
 void APlayerCharacter::BeginPlay()
 {
+	Super::BeginPlay();
 	checkf(IsValid(HealthComponent), TEXT("APlayerCharacter: HealthComponent not found!"));
 	HealthComponent->OnDeath.AddDynamic(this, &APlayerCharacter::DeathSequence);
+	SetInitialPosition(FMath::RandRange(0, 360));
 }
 
 void APlayerCharacter::DeathSequence()

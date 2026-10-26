@@ -22,10 +22,13 @@ public:
 	APlayerCharacter();
 
 	virtual void UpdateHealth(int Value) override;
+	
+	virtual void Move(float HorzDirection, float VertDirection, float DeltaTime) override;
 
 protected:
 
 	virtual void BeginPlay() override;
+
 
 private:
 	UPROPERTY(EditAnywhere, Category = "Default Components")
@@ -43,7 +46,12 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Default Components")
 	TObjectPtr <UHealthComponent> HealthComponent;
 
+	//UPROPERTY(EditAnywhere, Category = "Controls")
+	//TObjectPtr <UInputMappingContext> InputMappingContext;
+
 	UFUNCTION()
 	void DeathSequence();
+
+	
 
 };

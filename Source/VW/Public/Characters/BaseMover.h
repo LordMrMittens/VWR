@@ -3,17 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "GameFramework/Pawn.h"
 #include "BaseMover.generated.h"
 
 UCLASS()
-class VW_API ABaseMover : public AActor
+class VW_API ABaseMover : public APawn
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
 	ABaseMover();
+	UFUNCTION()
+	virtual void Move(float HorizontalDir, float VerticalDir, float DeltaSeconds);
 
 protected:
 	// Called when the game starts or when spawned
@@ -34,7 +36,6 @@ protected:
 	float Rotation{ 0.0f };
 
 	void RotateAroundPoint(const FRotator RotationToAdd);
-	virtual void Move(float HorizontalDir, float VerticalDir, float DeltaSeconds);
 	float GetNormalisedRotation(float RawRotation);
 	void SetLookAt();
 	void SetInitialPosition(float InitialRotation);
