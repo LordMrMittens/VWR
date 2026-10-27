@@ -28,4 +28,6 @@ public:
 	virtual void Die();
 
 	virtual void GetHit(FProjectileCollision CollisionData);
+
+	virtual void Shoot();
 };

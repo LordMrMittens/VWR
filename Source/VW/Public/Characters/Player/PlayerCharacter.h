@@ -11,6 +11,7 @@ class UCameraComponent;
 class USpringArmComponent;
 class UStaticMeshComponent;
 class UBillboardComponent;
+class ABaseProjectile;
 
 UCLASS()
 class VW_API APlayerCharacter : public ABaseMover, public ICharacterInterface
@@ -22,8 +23,8 @@ public:
 	APlayerCharacter();
 
 	virtual void UpdateHealth(int Value) override;
-	
-	virtual void Move(float HorzDirection, float VertDirection, float DeltaTime) override;
+
+	virtual void Shoot() override;
 
 protected:
 
@@ -45,9 +46,11 @@ private:
 	TObjectPtr <UBillboardComponent> GunSpawnPoint;
 	UPROPERTY(EditAnywhere, Category = "Default Components")
 	TObjectPtr <UHealthComponent> HealthComponent;
+	
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TSubclassOf<ABaseProjectile> BulletClass;
 
-	//UPROPERTY(EditAnywhere, Category = "Controls")
-	//TObjectPtr <UInputMappingContext> InputMappingContext;
+	TWeakObjectPtr<ABaseProjectile> LatestBulletSpawned;
 
 	UFUNCTION()
 	void DeathSequence();

@@ -5,6 +5,7 @@
 #include "Components/BillboardComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include "Projectiles/BaseProjectile.h"
 
 APlayerCharacter::APlayerCharacter()
 {
@@ -30,9 +31,10 @@ void APlayerCharacter::UpdateHealth(int Value)
 	
 }
 
-void APlayerCharacter::Move(float HorzDirection, float VertDirection, float DeltaTime)
+void APlayerCharacter::Shoot()
 {
-	Super::Move(HorzDirection, 0.0f, DeltaTime);
+	
+		//testBulletSpawned = GetWorld()->SpawnActor(BulletClass, GunSpawnPoint->GetComponentTransform());
 }
 
 void APlayerCharacter::BeginPlay()
