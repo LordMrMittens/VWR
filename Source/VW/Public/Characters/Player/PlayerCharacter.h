@@ -7,7 +7,7 @@
 
 class UHealthComponent;
 class UCapsuleComponent;
-class UCameraComponent;
+class UAutoSizeCamera;
 class USpringArmComponent;
 class UStaticMeshComponent;
 class UBillboardComponent;
@@ -41,7 +41,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Default Components")
 	TObjectPtr <USpringArmComponent> SpringArm;
 	UPROPERTY(EditAnywhere, Category = "Default Components")
-	TObjectPtr <UCameraComponent> Camera;
+	TObjectPtr <UAutoSizeCamera> Camera;
 	UPROPERTY(EditAnywhere, Category = "Default Components")
 	TObjectPtr <UBillboardComponent> GunSpawnPoint;
 	UPROPERTY(EditAnywhere, Category = "Default Components")
@@ -51,6 +51,9 @@ private:
 	TSubclassOf<ABaseProjectile> BulletClass;
 
 	TWeakObjectPtr<ABaseProjectile> LatestBulletSpawned;
+
+	UPROPERTY(EditAnywhere, Category = "Default Variables")
+	float IntialAltitude{ 10.f };
 
 	UFUNCTION()
 	void DeathSequence();

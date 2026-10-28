@@ -38,7 +38,7 @@ protected:
 	void RotateAroundPoint(const FRotator RotationToAdd);
 	float GetNormalisedRotation(float RawRotation);
 	void SetLookAt();
-	void SetInitialPosition(float InitialRotation);
+	void SetInitialPosition(float InitialRotation, float InitialAltitude);
 	float CalculateRotation(float HorizontalValue,float DeltaSeconds);
 	float CalculateAltitude(float VerticalValue, float DeltaSeconds);
 	void UpdatePosition(float IncomingRotation, float IncomingAltitude);

@@ -56,9 +56,10 @@ void ABaseMover::SetLookAt()
 	SetActorRotation(LookAtRotation, ETeleportType::TeleportPhysics);
 }
 
-void ABaseMover::SetInitialPosition(float InitialRotation)
+void ABaseMover::SetInitialPosition(float InitialRotation, float InitialAltitude)
 {
 	Rotation = InitialRotation;
+	Altitude = InitialAltitude;
 	Move(0, 0, 0); // Deltatime might have to have a value over 0
 }
 

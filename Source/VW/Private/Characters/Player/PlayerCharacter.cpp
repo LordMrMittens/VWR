@@ -3,8 +3,8 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/BillboardComponent.h"
+#include "Components/AutoSizeCamera.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Camera/CameraComponent.h"
 #include "Projectiles/BaseProjectile.h"
 
 APlayerCharacter::APlayerCharacter()
@@ -17,7 +17,7 @@ APlayerCharacter::APlayerCharacter()
 	GunMesh->SetupAttachment(MainMesh);
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("Spring Arm"));
 	SpringArm->SetupAttachment(CapsuleComponent);
-	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	Camera = CreateDefaultSubobject<UAutoSizeCamera>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
 	GunSpawnPoint = CreateDefaultSubobject<UBillboardComponent>(TEXT("Gun Spawn Point"));
 	GunSpawnPoint->SetupAttachment(GunMesh);
@@ -42,7 +42,7 @@ void APlayerCharacter::BeginPlay()
 	Super::BeginPlay();
 	checkf(IsValid(HealthComponent), TEXT("APlayerCharacter: HealthComponent not found!"));
 	HealthComponent->OnDeath.AddDynamic(this, &APlayerCharacter::DeathSequence);
-	SetInitialPosition(FMath::RandRange(0, 360));
+	SetInitialPosition(FMath::RandRange(0, 360), IntialAltitude);
 }
 
 void APlayerCharacter::DeathSequence()
