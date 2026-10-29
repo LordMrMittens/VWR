@@ -18,6 +18,10 @@ void ICharacterInterface::GetHit(FProjectileCollision CollisionData)
 {
 }
 
-void ICharacterInterface::Shoot()
+//void ICharacterInterface::Shoot()
+//{
+//}
+
+void ICharacterInterface::MoveCharacter(float HorizontalDir, float VerticalDir, float DeltaSeconds)
 {
 }

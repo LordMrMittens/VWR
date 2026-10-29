@@ -6,6 +6,7 @@
 #include "Characters/BaseMover.h"
 #include "BaseProjectile.generated.h"
 
+class UStaticMeshComponent;
 /**
  * 
  */
@@ -13,5 +14,19 @@ UCLASS()
 class VW_API ABaseProjectile : public ABaseMover
 {
 	GENERATED_BODY()
+
+public:
+	ABaseProjectile();
 	
+private:
+
+	float MoveDirectionAndSpeed{ 10.0f };
+
+	UPROPERTY(EditAnywhere, Category = "Default Components")
+	TObjectPtr<UStaticMeshComponent> Mesh;
+
+public:
+
+	virtual void Tick(float DeltaTime) override;
+
 };

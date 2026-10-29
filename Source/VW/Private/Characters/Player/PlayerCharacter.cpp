@@ -31,10 +31,11 @@ void APlayerCharacter::UpdateHealth(int Value)
 	
 }
 
-void APlayerCharacter::Shoot()
+void APlayerCharacter::Shoot_Implementation()
 {
+	UE_LOG(LogTemp, Warning, TEXT("Shooting in Player"));
 	
-		//testBulletSpawned = GetWorld()->SpawnActor(BulletClass, GunSpawnPoint->GetComponentTransform());
+	LatestBulletSpawned = GetWorld()->SpawnActor<ABaseProjectile>(BulletClass, GunSpawnPoint->GetComponentLocation(), GunSpawnPoint->GetComponentRotation());
 }
 
 void APlayerCharacter::BeginPlay()

@@ -24,7 +24,8 @@ public:
 
 	virtual void UpdateHealth(int Value) override;
 
-	virtual void Shoot() override;
+	UFUNCTION()
+	void Shoot_Implementation();
 
 protected:
 

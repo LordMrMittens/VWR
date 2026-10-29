@@ -29,12 +29,13 @@ void AVoidWingPlayerController::SetupInputComponent()
 	Super::SetupInputComponent();
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
 	EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &AVoidWingPlayerController::Move);
+	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &AVoidWingPlayerController::Shoot);
 	
 }
 
 void AVoidWingPlayerController::Move(const FInputActionValue& InputActionValue)
 {
-	if (!ControlledPawn.IsValid())
+	if (!IsValid(ControlledPawn))
 	{
 		FindControlledPawn();
 		return;
@@ -42,4 +43,18 @@ void AVoidWingPlayerController::Move(const FInputActionValue& InputActionValue)
 	FVector2D MovementInputValue = InputActionValue.Get<FVector2D>();
 	ControlledPawn->Move(MovementInputValue.Y, MovementInputValue.X, GetWorld()->GetDeltaSeconds());
 
+}
+
+void AVoidWingPlayerController::Shoot()
+{
+	if (!IsValid(ControlledPawn))
+	{
+		FindControlledPawn();
+		return;
+	}
+	if (ControlledPawn->Implements<UCharacterInterface>()) 
+	{
+		ICharacterInterface::Execute_Shoot(ControlledPawn);
+		UE_LOG(LogTemp, Warning, TEXT("Shooting in Controller"));
+	}
 }
