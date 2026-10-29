@@ -55,6 +55,5 @@ void AVoidWingPlayerController::Shoot()
 	if (ControlledPawn->Implements<UCharacterInterface>()) 
 	{
 		ICharacterInterface::Execute_Shoot(ControlledPawn);
-		UE_LOG(LogTemp, Warning, TEXT("Shooting in Controller"));
 	}
 }
