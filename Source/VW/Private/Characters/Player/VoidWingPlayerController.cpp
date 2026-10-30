@@ -21,7 +21,11 @@ void AVoidWingPlayerController::BeginPlay()
 
 void AVoidWingPlayerController::FindControlledPawn()
 {
-	ControlledPawn = GetPawn<ABaseMover>();
+	APawn* ControlledP = GetPawn();
+	if(ControlledP && ControlledP->GetClass()->ImplementsInterface(UCharacterInterface::StaticClass()))
+	{
+		ControlledPawn = ControlledP;
+	}
 }
 
 void AVoidWingPlayerController::SetupInputComponent()
@@ -35,25 +39,22 @@ void AVoidWingPlayerController::SetupInputComponent()
 
 void AVoidWingPlayerController::Move(const FInputActionValue& InputActionValue)
 {
-	if (!IsValid(ControlledPawn))
+	if (!ControlledPawn)
 	{
 		FindControlledPawn();
 		return;
 	}
 	FVector2D MovementInputValue = InputActionValue.Get<FVector2D>();
-	ControlledPawn->Move(MovementInputValue.Y, MovementInputValue.X, GetWorld()->GetDeltaSeconds());
+	ControlledPawn->MoveCharacter(MovementInputValue.Y, MovementInputValue.X, GetWorld()->GetDeltaSeconds());
 
 }
 
 void AVoidWingPlayerController::Shoot()
 {
-	if (!IsValid(ControlledPawn))
+	if (!ControlledPawn)
 	{
 		FindControlledPawn();
 		return;
 	}
-	if (ControlledPawn->Implements<UCharacterInterface>()) 
-	{
-		ICharacterInterface::Execute_Shoot(ControlledPawn);
-	}
+	ControlledPawn->Shoot();
 }

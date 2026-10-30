@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "Characters/Interfaces/CharacterInterface.h"
+//#include "UObject/NativeTypeToPropertyType.h"
 #include "VoidWingPlayerController.generated.h"
 
 class UInputMappingContext;
@@ -34,7 +35,8 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> ShootAction;
 
-	TObjectPtr<ABaseMover> ControlledPawn;
+	UPROPERTY()
+	TScriptInterface<ICharacterInterface> ControlledPawn;
 
 	void Move(const FInputActionValue& InputActionValue);
 	void Shoot();

@@ -28,8 +28,8 @@ public:
 	virtual void Die();
 
 	virtual void GetHit(FProjectileCollision CollisionData);
-	UFUNCTION(BlueprintNativeEvent)
-	void Shoot();
+	//UFUNCTION(BlueprintNativeEvent)
+	virtual void Shoot();
 
 	virtual void MoveCharacter(float HorizontalDir, float VerticalDir, float DeltaSeconds);
 };
