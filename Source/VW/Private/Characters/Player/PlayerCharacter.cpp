@@ -37,6 +37,11 @@ void APlayerCharacter::Shoot_Implementation()
 	LatestBulletSpawned = GetWorld()->SpawnActor<ABaseProjectile>(BulletClass, GunSpawnPoint->GetComponentLocation(), GunSpawnPoint->GetComponentRotation());
 }
 
+void APlayerCharacter::MoveCharacter(float HorizontalDir, float VerticalDir, float DeltaSeconds)
+{
+	Move(HorizontalDir, VerticalDir, GetWorld()->GetDeltaSeconds());
+}
+
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();

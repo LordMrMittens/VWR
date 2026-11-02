@@ -1,0 +1,58 @@
+// Fill out your copyright notice in the Description page of Project Settings.
+
+
+#include "Utils/MovementUtils.h"
+
+
+namespace MovementUtils
+{
+    void CalculateMovement(const FMovementStruct& MovementParams, FMovementResult& OutMovementResult)
+    {
+        FRotator UpdatedLookAt = GetUpdatedLookAt(MovementParams.CurrentLocation, MovementParams.CenterPoint);
+        OutMovementResult.NewRotation = CalculateRotation(MovementParams.CurrentRotation, MovementParams.HorizontalSpeed, MovementParams.HorizontalDirection, MovementParams.DeltaSeconds);
+        OutMovementResult.NewAltitude = CalculateAltitude(MovementParams.CurrentAltitude, MovementParams.VerticalSpeed, MovementParams.VerticalDirection, MovementParams.DeltaSeconds);
+        OutMovementResult.UpdatedTransform = FTransform(UpdatedLookAt, CalculateUpdatedPosition(OutMovementResult.NewRotation, MovementParams.DistanceFromCenter, OutMovementResult.NewAltitude, MovementParams.CenterPoint));
+    }
+
+    float GetNormalisedRotation(float RawRotation)
+    {
+        if (RawRotation > 0)
+        {
+            if (RawRotation > 360)
+            {
+                return RawRotation - 360;
+            }
+            return RawRotation;
+        }
+        return RawRotation + 360;
+    }
+
+    FRotator GetUpdatedLookAt(FVector CurrentLocation, FVector CenterPoint)
+    {
+        return (CenterPoint - CurrentLocation).Rotation();
+    }
+
+    float CalculateRotation(float CurrentRotation, float HorizontalSpeed, float HorizontalDirection, float DeltaSeconds)
+    {
+        float RawRotation = CurrentRotation - ((HorizontalDirection * HorizontalSpeed) * DeltaSeconds);
+        return GetNormalisedRotation(RawRotation);
+    }
+
+    float CalculateAltitude(float CurrentAltitude, float VerticalSpeed, float VerticalDirection, float DeltaSeconds)
+    {
+        return CurrentAltitude + ((VerticalDirection * VerticalSpeed) * DeltaSeconds);
+    }
+
+    FVector CalculateUpdatedPosition(float IncomingRotation, float DistanceFromCenter, float IncomingAltitude, FVector CenterPoint)
+    {
+        FTransform RotTransform(FRotator(0.0f, IncomingRotation, 0.0f), FVector(0.0f, 0.0f, 0.0f), FVector(1.0f, 1.0f, 1.0f));
+        FMatrix PosMatrix = RotTransform.ToMatrixWithScale();
+        FVector4 ResultVector = PosMatrix.TransformVector(FVector(0.0f, DistanceFromCenter, IncomingAltitude));
+        return FVector(CenterPoint + FVector(ResultVector));
+    }
+
+    FVector GetInstancedSMPosition(float InRotation, float InAltitude)
+    {
+        return FVector();
+    }
+}

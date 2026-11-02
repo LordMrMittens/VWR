@@ -26,6 +26,8 @@ public:
 
 	UFUNCTION()
 	void Shoot_Implementation();
+	UFUNCTION()
+	virtual void MoveCharacter(float HorizontalDir, float VerticalDir, float DeltaSeconds) override;
 
 protected:
 
