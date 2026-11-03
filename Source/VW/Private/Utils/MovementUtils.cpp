@@ -6,12 +6,14 @@
 
 namespace MovementUtils
 {
-    void CalculateMovement(const FMovementStruct& MovementParams, FMovementResult& OutMovementResult)
+   const FMovementResult CalculateMovement(const FMovementStruct& MovementParams)
     {
+        FMovementResult Result;
         FRotator UpdatedLookAt = GetUpdatedLookAt(MovementParams.CurrentLocation, MovementParams.CenterPoint);
-        OutMovementResult.NewRotation = CalculateRotation(MovementParams.CurrentRotation, MovementParams.HorizontalSpeed, MovementParams.HorizontalDirection, MovementParams.DeltaSeconds);
-        OutMovementResult.NewAltitude = CalculateAltitude(MovementParams.CurrentAltitude, MovementParams.VerticalSpeed, MovementParams.VerticalDirection, MovementParams.DeltaSeconds);
-        OutMovementResult.UpdatedTransform = FTransform(UpdatedLookAt, CalculateUpdatedPosition(OutMovementResult.NewRotation, MovementParams.DistanceFromCenter, OutMovementResult.NewAltitude, MovementParams.CenterPoint));
+        Result.NewRotation = CalculateRotation(MovementParams.CurrentRotation, MovementParams.HorizontalSpeed, MovementParams.HorizontalDirection, MovementParams.DeltaSeconds);
+        Result.NewAltitude = CalculateAltitude(MovementParams.CurrentAltitude, MovementParams.VerticalSpeed, MovementParams.VerticalDirection, MovementParams.DeltaSeconds);
+        Result.UpdatedTransform = FTransform(UpdatedLookAt, CalculateUpdatedPosition(Result.NewRotation, MovementParams.DistanceFromCenter, Result.NewAltitude, MovementParams.CenterPoint));
+        return Result;
     }
 
     float GetNormalisedRotation(float RawRotation)

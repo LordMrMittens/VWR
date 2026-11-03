@@ -11,7 +11,6 @@ struct FMovementStruct {
 	float HorizontalSpeed{ 0 };
 	float VerticalSpeed{ 0 };
 	FVector CurrentLocation{ 0 };
-	FRotator CurrentLookAt{ 0 };
 	float HorizontalDirection{ 0 };
 	float VerticalDirection{ 0 };
 	float DistanceFromCenter{ 0 };
@@ -31,7 +30,8 @@ struct FMovementResult
 namespace MovementUtils
 {
 
-	void CalculateMovement(const FMovementStruct& MovementParams, FMovementResult& OutMovementResult);
+	//void CalculateMovement(const FMovementStruct& MovementParams, FMovementResult& OutMovementResult);
+	const FMovementResult CalculateMovement(const FMovementStruct& MovementParams);
 	float GetNormalisedRotation(float RawRotation);
 	float CalculateRotation(float CurrentRotation, float HorizontalSpeed, float HorizontalValue, float DeltaSeconds);
 	float CalculateAltitude(float CurrentAltitude, float VerticalSpeed, float VerticalDirection, float DeltaSeconds);
