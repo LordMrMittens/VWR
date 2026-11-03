@@ -31,15 +31,19 @@ void APlayerCharacter::UpdateHealth(int Value)
 	
 }
 
-void APlayerCharacter::Shoot_Implementation()
+void APlayerCharacter::Shoot()
 {
-	
 	LatestBulletSpawned = GetWorld()->SpawnActor<ABaseProjectile>(BulletClass, GunSpawnPoint->GetComponentLocation(), GunSpawnPoint->GetComponentRotation());
 }
 
 void APlayerCharacter::MoveCharacter(float HorizontalDir, float VerticalDir, float DeltaSeconds)
 {
 	Move(HorizontalDir, VerticalDir, GetWorld()->GetDeltaSeconds());
+}
+
+float APlayerCharacter::GetRotation()
+{
+	return Rotation;
 }
 
 void APlayerCharacter::BeginPlay()

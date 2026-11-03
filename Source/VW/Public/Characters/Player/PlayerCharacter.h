@@ -25,9 +25,11 @@ public:
 	virtual void UpdateHealth(int Value) override;
 
 	UFUNCTION()
-	void Shoot_Implementation();
+	virtual void Shoot() override;
 	UFUNCTION()
 	virtual void MoveCharacter(float HorizontalDir, float VerticalDir, float DeltaSeconds) override;
+
+	virtual float GetRotation() override;
 
 protected:
 

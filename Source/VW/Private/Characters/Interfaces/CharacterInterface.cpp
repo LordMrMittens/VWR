@@ -25,3 +25,8 @@ void ICharacterInterface::Shoot()
 void ICharacterInterface::MoveCharacter(float HorizontalDir, float VerticalDir, float DeltaSeconds)
 {
 }
+
+float ICharacterInterface::GetRotation()
+{
+    return 0.0f;
+}

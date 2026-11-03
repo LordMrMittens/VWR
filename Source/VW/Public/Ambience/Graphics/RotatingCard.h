@@ -3,11 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "Characters\BaseMover.h"
+#include "Characters/Interfaces/CharacterInterface.h"
 #include "RotatingCard.generated.h"
 
+
 UCLASS()
-class VW_API ARotatingCard : public AActor
+class VW_API ARotatingCard : public ABaseMover
 {
 	GENERATED_BODY()
 	
@@ -22,5 +24,12 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void RotateWithPlayer();
+
+private:
+	TScriptInterface<ICharacterInterface> PlayerCharacter;
+
+	void AssignPlayerCharacter();
 
 };

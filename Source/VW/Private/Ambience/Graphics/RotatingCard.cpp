@@ -2,6 +2,7 @@
 
 
 #include "Ambience/Graphics/RotatingCard.h"
+#include "Kismet/GameplayStatics.h"
 #include "Utils/MovementUtils.h"
 
 // Sets default values
@@ -24,5 +25,27 @@ void ARotatingCard::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (!PlayerCharacter) {
+		AssignPlayerCharacter();
+		return;
+	}
+	RotateWithPlayer();
+}
+
+void ARotatingCard::RotateWithPlayer()
+{
+	float DesiredRotation = PlayerCharacter->GetRotation();
+	FRotator UpdatedLookAt = MovementUtils::GetUpdatedLookAt(GetActorLocation(), FVector(0)); //not how it works in blueprints
+	FVector UpdatedPosition = MovementUtils::CalculateUpdatedPosition(DesiredRotation, DistanceFromCenter, 0.0f, CenterPoint);
+	SetActorLocationAndRotation(UpdatedPosition, UpdatedLookAt, false, nullptr, ETeleportType::TeleportPhysics);
+}
+
+void ARotatingCard::AssignPlayerCharacter()
+{
+	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(this,0);
+	if (PlayerPawn && PlayerPawn->GetClass()->ImplementsInterface(UCharacterInterface::StaticClass())) {
+
+		PlayerCharacter = PlayerPawn;
+	}
 }
 

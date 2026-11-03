@@ -32,4 +32,6 @@ public:
 	virtual void Shoot();
 
 	virtual void MoveCharacter(float HorizontalDir, float VerticalDir, float DeltaSeconds);
+
+	virtual float GetRotation();
 };
