@@ -31,5 +31,9 @@ private:
 	TScriptInterface<ICharacterInterface> PlayerCharacter;
 
 	void AssignPlayerCharacter();
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<USceneComponent> RootC;
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UStaticMeshComponent> Card;
 
 };

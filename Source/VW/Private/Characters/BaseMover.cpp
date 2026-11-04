@@ -42,6 +42,5 @@ void ABaseMover::SetInitialPosition(float InitialRotation, float InitialAltitude
 void ABaseMover::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	Move(1, 0, DeltaTime);
 }
 
