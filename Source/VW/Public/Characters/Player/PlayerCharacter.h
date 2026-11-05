@@ -26,8 +26,10 @@ public:
 
 	UFUNCTION()
 	virtual void Shoot() override;
-	UFUNCTION()
-	virtual void MoveCharacter(float HorizontalDir, float VerticalDir, float DeltaSeconds) override;
+
+	//Kept separate for now as players should never have a vertical direction input, overriding vertical direction with 0.0f unless this changes in the future
+	virtual void Move(float HorizontalDir, float VerticalDir, float DeltaSeconds) override; //Base Move
+	virtual void Move(float HorizontalDir, float VerticalDir) override; // Interface Move
 
 	virtual float GetRotation() override;
 

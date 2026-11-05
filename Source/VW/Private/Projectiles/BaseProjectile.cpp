@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+ // Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Projectiles/BaseProjectile.h"
@@ -12,8 +12,16 @@ ABaseProjectile::ABaseProjectile()
 
 }
 
+void ABaseProjectile::SetupProjectile(float StartingRotation, float StartingAltitude, float HorzDirection, float VertDirection)
+{
+	Rotation = StartingRotation;
+	Altitude = StartingAltitude;
+	HorizontalDirection = HorzDirection;
+	VerticalDirection = VertDirection;
+}
+
 void ABaseProjectile::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	Move(0, MoveDirectionAndSpeed, DeltaTime);
+	Move(HorizontalDirection, VerticalDirection, DeltaTime);
 }

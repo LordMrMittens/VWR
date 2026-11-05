@@ -22,7 +22,7 @@ void ICharacterInterface::Shoot()
 {
 }
 
-void ICharacterInterface::MoveCharacter(float HorizontalDir, float VerticalDir, float DeltaSeconds)
+void ICharacterInterface::Move(float HorizontalDir, float VerticalDir)
 {
 }
 

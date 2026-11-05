@@ -38,7 +38,7 @@ void ARotatingCard::Tick(float DeltaTime)
 void ARotatingCard::RotateWithPlayer()
 {
 	float DesiredRotation = PlayerCharacter->GetRotation();
-	FRotator UpdatedLookAt = MovementUtils::GetUpdatedLookAt(GetActorLocation(), FVector(0)); //not how it works in blueprints
+	FRotator UpdatedLookAt = MovementUtils::GetUpdatedLookAt(GetActorLocation(), FVector(0));
 	FVector UpdatedPosition = MovementUtils::CalculateUpdatedPosition(DesiredRotation, DistanceFromCenter, 0.0f, CenterPoint);
 	SetActorLocationAndRotation(UpdatedPosition, UpdatedLookAt, false, nullptr, ETeleportType::TeleportPhysics);
 }

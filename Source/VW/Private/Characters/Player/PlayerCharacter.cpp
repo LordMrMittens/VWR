@@ -34,11 +34,18 @@ void APlayerCharacter::UpdateHealth(int Value)
 void APlayerCharacter::Shoot()
 {
 	LatestBulletSpawned = GetWorld()->SpawnActor<ABaseProjectile>(BulletClass, GunSpawnPoint->GetComponentLocation(), GunSpawnPoint->GetComponentRotation());
+	if (!LatestBulletSpawned.IsValid()) return;
+	LatestBulletSpawned->SetupProjectile(Rotation, Altitude, 0, 1); //altitude should have an offset for the firing point, gun spawn point might not be required
 }
 
-void APlayerCharacter::MoveCharacter(float HorizontalDir, float VerticalDir, float DeltaSeconds)
+void APlayerCharacter::Move(float HorizontalDir, float VerticalDir, float DeltaSeconds)
 {
-	Move(HorizontalDir, VerticalDir, GetWorld()->GetDeltaSeconds());
+	ABaseMover::Move(HorizontalDir, VerticalDir, GetWorld()->GetDeltaSeconds());
+}
+
+void APlayerCharacter::Move(float HorizontalDir, float VerticalDir)
+{
+	Move(HorizontalDir, VerticalDir =0.0f, GetWorld()->GetDeltaSeconds());
 }
 
 float APlayerCharacter::GetRotation()

@@ -45,7 +45,7 @@ void AVoidWingPlayerController::Move(const FInputActionValue& InputActionValue)
 		return;
 	}
 	FVector2D MovementInputValue = InputActionValue.Get<FVector2D>();
-	ControlledPawn->MoveCharacter(MovementInputValue.Y, MovementInputValue.X, GetWorld()->GetDeltaSeconds());
+	ControlledPawn->Move(MovementInputValue.Y, MovementInputValue.X);
 
 }
 

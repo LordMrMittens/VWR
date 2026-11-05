@@ -17,14 +17,15 @@ class VW_API ABaseProjectile : public ABaseMover
 
 public:
 	ABaseProjectile();
+
+	void SetupProjectile(float StartingRotation, float StartingAltitude, float HorzDirection, float VertDirection);
 	
 private:
 
-	float MoveDirectionAndSpeed{ 10.0f };
-
 	UPROPERTY(EditAnywhere, Category = "Default Components")
 	TObjectPtr<UStaticMeshComponent> Mesh;
-
+	float HorizontalDirection{ 0.0f };
+	float VerticalDirection{ 0.0f };
 public:
 
 	virtual void Tick(float DeltaTime) override;

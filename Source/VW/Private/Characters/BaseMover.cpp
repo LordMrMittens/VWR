@@ -22,7 +22,7 @@ void ABaseMover::BeginPlay()
 
 void ABaseMover::Move(float HorizontalDir, float VerticalDir, float DeltaSeconds)
 {
-	const FMovementStruct MovementParams{ Rotation,Altitude,DefaultHorzSpeed,DefaultVertSpeed,GetActorLocation(), 
+	const FMovementStruct MovementParams{ Rotation,Altitude,HorizontalSpeed,VerticalSpeed,GetActorLocation(), 
 									HorizontalDir,VerticalDir,DistanceFromCenter, DeltaSeconds, CenterPoint };
 	FMovementResult MovementResult = MovementUtils::CalculateMovement(MovementParams);
 	Rotation = MovementResult.NewRotation;
