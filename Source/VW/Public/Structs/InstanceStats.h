@@ -17,7 +17,7 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Stats")
 	bool bIsDead{ false };
 	UPROPERTY(VisibleAnywhere, Category = "Stats")
-	FVector Offset{ 0.0f };
+	FVector2D Offset{ 0.0f };
 
 
 

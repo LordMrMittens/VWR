@@ -59,6 +59,8 @@ void APlayerCharacter::BeginPlay()
 	checkf(IsValid(HealthComponent), TEXT("APlayerCharacter: HealthComponent not found!"));
 	HealthComponent->OnDeath.AddDynamic(this, &APlayerCharacter::DeathSequence);
 	SetInitialPosition(FMath::RandRange(0, 360), IntialAltitude);
+	Move(0, 0, 0);
+	
 }
 
 void APlayerCharacter::DeathSequence()

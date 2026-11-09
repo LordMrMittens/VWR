@@ -39,7 +39,7 @@ void ARotatingCard::RotateWithPlayer()
 {
 	float DesiredRotation = PlayerCharacter->GetRotation();
 	FRotator UpdatedLookAt = MovementUtils::GetUpdatedLookAt(GetActorLocation(), FVector(0));
-	FVector UpdatedPosition = MovementUtils::CalculateUpdatedPosition(DesiredRotation, DistanceFromCenter, 0.0f, CenterPoint);
+	FVector UpdatedPosition = MovementUtils::CalculateUpdatedPosition(DesiredRotation, 0.0f, DistanceFromCenter, CenterPoint);
 	SetActorLocationAndRotation(UpdatedPosition, UpdatedLookAt, false, nullptr, ETeleportType::TeleportPhysics);
 }
 

@@ -36,7 +36,6 @@ namespace MovementUtils
 	float CalculateRotation(float CurrentRotation, float HorizontalSpeed, float HorizontalValue, float DeltaSeconds);
 	float CalculateAltitude(float CurrentAltitude, float VerticalSpeed, float VerticalDirection, float DeltaSeconds);
 	FRotator GetUpdatedLookAt(FVector CurrentLocation, FVector CenterPoint);
-	FVector CalculateUpdatedPosition(float IncomingRotation, float DistanceFromCenter, float IncomingAltitude, FVector CenterPoint);
-	FVector GetInstancedSMPosition(float InRotation, float InAltitude);
+	FVector CalculateUpdatedPosition(float IncomingRotation, float IncomingAltitude, float DistanceFromCenter, FVector CenterPoint);
 	
 };

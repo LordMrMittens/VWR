@@ -12,14 +12,6 @@ ABaseMover::ABaseMover()
 
 }
 
-// Called when the game starts or when spawned
-void ABaseMover::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-
 void ABaseMover::Move(float HorizontalDir, float VerticalDir, float DeltaSeconds)
 {
 	const FMovementStruct MovementParams{ Rotation,Altitude,HorizontalSpeed,VerticalSpeed,GetActorLocation(), 
@@ -34,7 +26,7 @@ void ABaseMover::SetInitialPosition(float InitialRotation, float InitialAltitude
 {
 	Rotation = InitialRotation;
 	Altitude = InitialAltitude;
-	Move(0, 0, 0); // Deltatime might have to have a value over 0
+	Move(0, 0, .10); // Deltatime might have to have a value over 0
 }
 
 

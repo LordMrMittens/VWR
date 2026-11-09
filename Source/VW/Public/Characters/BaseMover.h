@@ -20,8 +20,6 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 
 	void SetInitialPosition(float InitialRotation, float InitialAltitude);
 
@@ -30,6 +28,10 @@ protected:
 	float VerticalSpeed{ 0.0f };
 	UPROPERTY(EditAnywhere, Category = "Default Variables")
 	float HorizontalSpeed{ 5.0f };
+	UPROPERTY(EditAnywhere, Category = "Default Variables")
+	float DefaultVerticalSpeed{ 0.0f };
+	UPROPERTY(EditAnywhere, Category = "Default Variables")
+	float DefaultHorizontalSpeed{ 5.0f };
 
 	UPROPERTY(VisibleAnywhere, Category = "Movement Variables")
 	float Altitude{ 0.0f };

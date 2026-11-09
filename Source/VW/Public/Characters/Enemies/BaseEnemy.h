@@ -17,7 +17,7 @@ class VW_API ABaseEnemy : public ABaseMover
 protected:
 
 	float CurrentHorzDirection{ 0.0f };
-	float CurrentVerticalDirection{ 0.0f };
+	float CurrentVertDirection{ 0.0f };
 
 public:
 
