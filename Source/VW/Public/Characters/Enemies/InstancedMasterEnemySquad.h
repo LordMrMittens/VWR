@@ -49,6 +49,12 @@ private:
 	UPROPERTY(EditAnywhere, Category = "InitialVariables")
 	FRotator RotationalOffset{ 0.0f };
 
+	UPROPERTY(EditAnywhere, Category = "Debug")
+	bool bDebugSpawn{ false };
+
+	UPROPERTY(EditAnywhere, Category = "Debug")
+	float DebugSpawnRotation{ 0.0f };
+
 	UPROPERTY(EditAnywhere, Category = "Formation")
 	int32 NumberOfRows{ 4 };
 	UPROPERTY(EditAnywhere, Category = "Formation")

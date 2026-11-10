@@ -17,8 +17,9 @@ AInstancedMasterEnemySquad::AInstancedMasterEnemySquad()
 void AInstancedMasterEnemySquad::BeginPlay()
 {
 	Super::BeginPlay();
-
-	SetInitialPosition(FMath::RandRange(0, 360), StartingHeight);
+	Move(0, 0, 0.1f);
+	float SpawnRotation = bDebugSpawn ? DebugSpawnRotation : FMath::RandRange(0, 360);
+	SetInitialPosition(SpawnRotation, StartingHeight);
 	for (int32 r = 0; r < NumberOfRows; r++)
 	{
 		for (int32 c = 0; c < NumberOfColumns; c++) 

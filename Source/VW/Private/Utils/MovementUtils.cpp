@@ -31,7 +31,8 @@ namespace MovementUtils
 
     FRotator GetUpdatedLookAt(FVector CurrentLocation, FVector CenterPoint)
     {
-        return (CenterPoint - CurrentLocation).Rotation();
+        FVector LookAt(FVector(CenterPoint.X, CenterPoint.Y, CurrentLocation.Z) - CurrentLocation);
+        return LookAt.Rotation();
     }
 
     float CalculateRotation(float CurrentRotation, float HorizontalSpeed, float HorizontalDirection, float DeltaSeconds)
