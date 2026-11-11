@@ -9,6 +9,7 @@
 class UInstancedStaticMeshComponent;
 class ABaseProjectile;
 struct FInstanceStats;
+struct FProjectileCollision;
 /**
  * 
  */
@@ -29,7 +30,11 @@ class VW_API AInstancedMasterEnemySquad : public ABaseEnemy
 	GENERATED_BODY()
 
 public:
+
 	AInstancedMasterEnemySquad();
+
+	UFUNCTION()
+	virtual void GetHit(FProjectileCollision CollisionData) override;
 
 protected:
 
@@ -69,7 +74,7 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Formation")
 	float VerticalMovementDuration{0.5f};
 	UPROPERTY(VisibleAnywhere, Category = "Formation")
-	TArray<int32> AliveEnemies;
+	int32 AliveEnemiesInSquad{0};
 
 	UPROPERTY(VisibleAnywhere, Category = "Stats")
 	TArray<FInstanceStats> PerInstanceStats;

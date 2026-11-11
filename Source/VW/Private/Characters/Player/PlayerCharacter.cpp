@@ -35,7 +35,8 @@ void APlayerCharacter::Shoot()
 {
 	LatestBulletSpawned = GetWorld()->SpawnActor<ABaseProjectile>(BulletClass, GunSpawnPoint->GetComponentLocation(), GunSpawnPoint->GetComponentRotation());
 	if (!LatestBulletSpawned.IsValid()) return;
-	LatestBulletSpawned->SetupProjectile(Rotation, Altitude, 0, 1); //altitude should have an offset for the firing point, gun spawn point might not be required
+	LatestBulletSpawned->SetupProjectile(Rotation, Altitude + 40, 0, 1); //add altitude offset and get rid of magic numbers
+	UE_LOG(LogTemp, Display, TEXT("Shoot"));
 }
 
 void APlayerCharacter::Move(float HorizontalDir, float VerticalDir, float DeltaSeconds)

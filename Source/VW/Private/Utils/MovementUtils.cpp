@@ -18,7 +18,8 @@ namespace MovementUtils
 
     float GetNormalisedRotation(float RawRotation)
     {
-        if (RawRotation > 0)
+        return FMath::Fmod(RawRotation, 360.0f);
+     /*   if (RawRotation > 0)
         {
             if (RawRotation > 360)
             {
@@ -26,7 +27,7 @@ namespace MovementUtils
             }
             return RawRotation;
         }
-        return RawRotation + 360;
+        return RawRotation + 360;*/
     }
 
     FRotator GetUpdatedLookAt(FVector CurrentLocation, FVector CenterPoint)

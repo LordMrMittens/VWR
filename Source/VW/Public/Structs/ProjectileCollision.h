@@ -19,7 +19,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = "Projectile Values")
 	float DamageRadius{ 10.0f };
 	UPROPERTY(EditAnywhere, Category = "Projectile Values")
-	int Damage{ 1 };
+	int Damage{ -1 };
 	
 	
 	

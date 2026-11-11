@@ -4,13 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "Characters/BaseMover.h"
+#include "Characters/Interfaces/CharacterInterface.h"
 #include "BaseEnemy.generated.h"
 
 /**
  * 
  */
 UCLASS() //THIS CLASS IS DEPRECATED, REPLICATING FOR SYSTEMS TEMPORARILY
-class VW_API ABaseEnemy : public ABaseMover
+class VW_API ABaseEnemy : public ABaseMover, public ICharacterInterface
 {
 	GENERATED_BODY()
 

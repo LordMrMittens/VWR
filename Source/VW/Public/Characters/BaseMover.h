@@ -12,7 +12,7 @@ class VW_API ABaseMover : public APawn
 	GENERATED_BODY()
 	
 public:	
-
+	
 	ABaseMover();
 
 	UFUNCTION()

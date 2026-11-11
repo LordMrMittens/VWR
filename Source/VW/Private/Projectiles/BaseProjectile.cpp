@@ -2,6 +2,7 @@
 
 
 #include "Projectiles/BaseProjectile.h"
+#include "Characters/Interfaces/CharacterInterface.h"
 #include "Components/StaticMeshcomponent.h"
 
 
@@ -12,6 +13,12 @@ ABaseProjectile::ABaseProjectile()
 
 }
 
+void ABaseProjectile::BeginPlay()
+{
+	Super::BeginPlay();
+	OnActorBeginOverlap.AddDynamic(this, &ABaseProjectile::OnProjectileOverlaps);
+}
+
 void ABaseProjectile::SetupProjectile(float StartingRotation, float StartingAltitude, float HorzDirection, float VertDirection)
 {
 	Rotation = StartingRotation;
@@ -19,6 +26,18 @@ void ABaseProjectile::SetupProjectile(float StartingRotation, float StartingAlti
 	HorizontalDirection = HorzDirection;
 	VerticalDirection = VertDirection;
 }
+
+void ABaseProjectile::OnProjectileOverlaps(AActor* OverlappedActor, AActor* OtherActor)
+{
+	if (!IsValid(OtherActor)) return;
+	if(ICharacterInterface* HitActor = Cast<ICharacterInterface>(OtherActor))
+	{
+		HitActor->GetHit(ProjectileData);
+	}
+	//Spawn VFX SFX
+	Destroy();
+}
+
 
 void ABaseProjectile::Tick(float DeltaTime)
 {

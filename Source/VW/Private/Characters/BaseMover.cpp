@@ -26,7 +26,7 @@ void ABaseMover::SetInitialPosition(float InitialRotation, float InitialAltitude
 {
 	Rotation = InitialRotation;
 	Altitude = InitialAltitude;
-	Move(0, 0, .10); // Deltatime might have to have a value over 0
+	Move(0, 0, GetWorld()->GetDeltaSeconds());
 }
 
 

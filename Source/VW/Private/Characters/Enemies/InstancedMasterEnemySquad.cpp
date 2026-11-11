@@ -2,9 +2,10 @@
 
 
 #include "Characters/Enemies/InstancedMasterEnemySquad.h"
-#include "Utils/MovementUtils.h"
 #include "Components/InstancedStaticMeshComponent.h"
+#include "Structs/ProjectileCollision.h"
 #include "Structs/InstanceStats.h"
+#include "Utils/MovementUtils.h"
 
 AInstancedMasterEnemySquad::AInstancedMasterEnemySquad()
 {
@@ -14,10 +15,32 @@ AInstancedMasterEnemySquad::AInstancedMasterEnemySquad()
 	ISMAlienMesh->SetupAttachment(EnemyRoot);
 }
 
+void AInstancedMasterEnemySquad::GetHit(FProjectileCollision CollisionData)
+{
+	TArray<int32> HitInvadersIndexes = ISMAlienMesh->GetInstancesOverlappingSphere(CollisionData.Location, CollisionData.DamageRadius, true);
+	for (int32 Index : HitInvadersIndexes)
+	{
+		PerInstanceStats[Index].bIsDead = (PerInstanceStats[Index].Health += CollisionData.Damage) <= 0;
+		if (PerInstanceStats[Index].bIsDead)
+		{
+			//SFX and VFX, Score, Items Spawned etc
+			ISMAlienMesh->UpdateInstanceTransform(Index, FTransform(FRotator::ZeroRotator, FVector::ZeroVector, FVector::ZeroVector), false, true, true);
+			if (--AliveEnemiesInSquad <= 0) 
+			{
+				//other squad full wipe logic
+				Destroy();
+			}
+		}
+	}
+}
+
 void AInstancedMasterEnemySquad::BeginPlay()
 {
 	Super::BeginPlay();
-	Move(0, 0, 0.1f);
+	checkf(IsValid(ISMAlienMesh), TEXT("Enemy Squad has no valid ISM Component"));
+
+	ABaseMover::Move(0, 0, GetWorld()->GetDeltaSeconds());
+
 	float SpawnRotation = bDebugSpawn ? DebugSpawnRotation : FMath::RandRange(0, 360);
 	SetInitialPosition(SpawnRotation, StartingHeight);
 	for (int32 r = 0; r < NumberOfRows; r++)
@@ -42,7 +65,7 @@ void AInstancedMasterEnemySquad::SpawnInvaderISM(int32 Row, int32 Column)
 	FTransform SpawnTransform (SpawnLookAt, SpawnLocation, FVector{ 1.0f });
 	int32 InstanceIndex = ISMAlienMesh->AddInstance(SpawnTransform, false);
 	int32 StatsIndex = PerInstanceStats.Emplace( FInstanceStats{ InstanceIndex,AlienHealth, false, FVector2D(Params.RotationOffset, Params.AltitudeOffset) });
-	AliveEnemies.AddUnique(StatsIndex);
+	AliveEnemiesInSquad++;
 }
 
 void AInstancedMasterEnemySquad::CalculateInstanceOffset(int32 RowIndex, int32 ColumnIndex, FSpawnOffsetParams& OutSpawnParams)
@@ -50,7 +73,7 @@ void AInstancedMasterEnemySquad::CalculateInstanceOffset(int32 RowIndex, int32 C
 	OutSpawnParams.RotationOffset = HorizontalSpacing * ColumnIndex;
 	OutSpawnParams.AltitudeOffset = VerticalSpacing * RowIndex;
 	OutSpawnParams.SpawnRotation = MovementUtils::GetNormalisedRotation(Rotation + OutSpawnParams.RotationOffset);
-	OutSpawnParams.SpawnAltitude = Altitude + OutSpawnParams.AltitudeOffset;// Why not -> Altitude + Params.AltitudeOffset;
+	OutSpawnParams.SpawnAltitude = Altitude + OutSpawnParams.AltitudeOffset;
 }
 
 void AInstancedMasterEnemySquad::StopAndMoveVertically()
