@@ -29,9 +29,13 @@ void ABaseProjectile::SetupProjectile(float StartingRotation, float StartingAlti
 
 void ABaseProjectile::OnProjectileOverlaps(AActor* OverlappedActor, AActor* OtherActor)
 {
+
+
 	if (!IsValid(OtherActor)) return;
+
 	if(ICharacterInterface* HitActor = Cast<ICharacterInterface>(OtherActor))
 	{
+		ProjectileData.Location = GetActorLocation();
 		HitActor->GetHit(ProjectileData);
 	}
 	//Spawn VFX SFX
