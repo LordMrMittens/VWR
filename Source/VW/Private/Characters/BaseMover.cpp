@@ -26,7 +26,10 @@ void ABaseMover::SetInitialPosition(float InitialRotation, float InitialAltitude
 {
 	Rotation = InitialRotation;
 	Altitude = InitialAltitude;
-	Move(0, 0, GetWorld()->GetDeltaSeconds());
+
+	FVector InitialLocation = MovementUtils::CalculateUpdatedPosition(InitialRotation, InitialAltitude, DistanceFromCenter, CenterPoint);
+	FRotator InitialLookAt = MovementUtils::GetUpdatedLookAt(InitialLocation, CenterPoint);
+	SetActorLocationAndRotation(InitialLocation, InitialLookAt, false, nullptr, ETeleportType::TeleportPhysics);
 }
 
 

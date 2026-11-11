@@ -21,9 +21,8 @@ void AInstancedMasterEnemySquad::BeginPlay()
 	Super::BeginPlay();
 	checkf(IsValid(ISMAlienMesh), TEXT("Enemy Squad has no valid ISM Component"));
 
-	float SpawnRotation = bDebugSpawn ? DebugSpawnRotation : FMath::RandRange(0, 360);
+	float SpawnRotation = bDebugSpawn ? DebugSpawnRotation : FMath::RandRange(0.0f, 360.0f);
 	SetInitialPosition(SpawnRotation, StartingHeight);
-	ABaseMover::Move(0, 0, GetWorld()->GetDeltaSeconds());
 
 	for (int32 r = 0; r < NumberOfRows; r++)
 	{
