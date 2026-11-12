@@ -12,6 +12,7 @@ class USpringArmComponent;
 class UStaticMeshComponent;
 class UBillboardComponent;
 class ABaseProjectile;
+class UGunComponent;
 
 UCLASS()
 class VW_API APlayerCharacter : public ABaseMover, public ICharacterInterface
@@ -50,18 +51,14 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Default Components")
 	TObjectPtr <UAutoSizeCamera> Camera;
 	UPROPERTY(EditAnywhere, Category = "Default Components")
-	TObjectPtr <UBillboardComponent> GunSpawnPoint;
+	TObjectPtr <UGunComponent> GunComponent;
 	UPROPERTY(EditAnywhere, Category = "Default Components")
 	TObjectPtr <UHealthComponent> HealthComponent;
-	
-	UPROPERTY(EditAnywhere, Category = "Combat")
-	TSubclassOf<ABaseProjectile> BulletClass;
-
-	TWeakObjectPtr<ABaseProjectile> LatestBulletSpawned;
 
 	UPROPERTY(EditAnywhere, Category = "Default Variables")
 	float IntialAltitude{ 10.f };
-
+	UPROPERTY(EditAnywhere, Category = "Default Variables")
+	FVector2D ShootingOffset{ 0.0f };
 	UFUNCTION()
 	void DeathSequence();
 

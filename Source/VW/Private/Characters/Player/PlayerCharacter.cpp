@@ -4,6 +4,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/BillboardComponent.h"
 #include "Components/AutoSizeCamera.h"
+#include "Components/GunComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Projectiles/BaseProjectile.h"
 
@@ -19,8 +20,8 @@ APlayerCharacter::APlayerCharacter()
 	SpringArm->SetupAttachment(CapsuleComponent);
 	Camera = CreateDefaultSubobject<UAutoSizeCamera>(TEXT("Camera"));
 	Camera->SetupAttachment(SpringArm);
-	GunSpawnPoint = CreateDefaultSubobject<UBillboardComponent>(TEXT("Gun Spawn Point"));
-	GunSpawnPoint->SetupAttachment(GunMesh);
+	GunComponent = CreateDefaultSubobject<UGunComponent>(TEXT("Gun"));
+	GunComponent->SetupAttachment(GunMesh);
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("Health Component"));
 
 }
@@ -33,9 +34,7 @@ void APlayerCharacter::UpdateHealth(int Value)
 
 void APlayerCharacter::Shoot()
 {
-	LatestBulletSpawned = GetWorld()->SpawnActor<ABaseProjectile>(BulletClass, GunSpawnPoint->GetComponentLocation(), GunSpawnPoint->GetComponentRotation());
-	if (!LatestBulletSpawned.IsValid()) return;
-	LatestBulletSpawned->SetupProjectile(Rotation, Altitude + 40, 0, 1); //add altitude offset and get rid of magic numbers
+	GunComponent->Shoot(Rotation, Altitude, ShootingOffset);
 }
 
 void APlayerCharacter::Move(float HorizontalDir, float VerticalDir, float DeltaSeconds)

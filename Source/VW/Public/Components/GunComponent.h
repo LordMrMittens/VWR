@@ -18,10 +18,8 @@ public:
 	// Sets default values for this component's properties
 	UGunComponent();
 
-	UFUNCTION()
-	void Shoot(float Rotation, float Altitude, FIntPoint Offset = FIntPoint(0,0));
-	
-	void Shoot(float Rotation, float Altitude, FVector SpawnPoint, FIntPoint Offset = FIntPoint(0, 0));
+	void Shoot(float Rotation, float Altitude, FVector2D Offset = FVector2D(0.0f));
+	void Shoot(float Rotation, float Altitude, FVector SpawnPoint, FVector2D Offset = FVector2D(0.0f));
 
 protected:
 	// Called when the game starts

@@ -24,12 +24,12 @@ void UGunComponent::BeginPlay()
 	
 }
 
-void UGunComponent::Shoot(float Rotation, float Altitude, FIntPoint Offset)
+void UGunComponent::Shoot(float Rotation, float Altitude, FVector2D Offset)
 {
 	Shoot(Rotation, Altitude, GetComponentLocation(), Offset);
 }
 
-void UGunComponent::Shoot(float Rotation, float Altitude, FVector SpawnPoint, FIntPoint Offset)
+void UGunComponent::Shoot(float Rotation, float Altitude, FVector SpawnPoint, FVector2D Offset)
 {
 	LastProjectile = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, SpawnPoint, GetComponentRotation());
 	if (!LastProjectile.IsValid()) return;

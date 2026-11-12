@@ -7,6 +7,7 @@
 #include "InstancedMasterEnemySquad.generated.h"
 
 class UInstancedStaticMeshComponent;
+class UGunComponent;
 class ABaseProjectile;
 struct FInstanceStats;
 struct FProjectileCollision;
@@ -44,9 +45,10 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Components")
 	TObjectPtr<UInstancedStaticMeshComponent> ISMAlienMesh;
-
 	UPROPERTY(EditAnywhere, Category = "Components")
 	TObjectPtr<USceneComponent> EnemyRoot;
+	UPROPERTY(EditAnywhere, Category = "Components")
+	TObjectPtr<UGunComponent> GunComponent;
 
 	UPROPERTY(EditAnywhere, Category = "InitialVariables")
 	float StartingHeight{ 500.0f };
@@ -80,17 +82,20 @@ private:
 	TArray<FInstanceStats> PerInstanceStats;
 
 	UPROPERTY(EditAnywhere, Category = "Combat")
-	FVector ShootingOffset;
+	FVector2D ShootingOffset{0.0f};
 	UPROPERTY(EditAnywhere, Category = "Combat")
-	float MaxTimeBetweenShots{ 3.0f};
+	float MaxTimeBetweenShots{ 6.0f};
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	float MinTimeBetweenShots{ 3.0f};
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	float AlienHealth{1.0f};
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TSubclassOf<ABaseProjectile> ProjectileClass;
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TWeakObjectPtr<ABaseProjectile> LastProjectile;
-
 	FTimerHandle MovementTimerHandle;
+	FTimerHandle ShootingTimerHandle;
+
 	UFUNCTION()
 	void SpawnInvaderISM(int32 Row, int32 Column);
 	void CalculateInstanceOffset(int32 RowIndex, int32 ColumnIndex, FSpawnOffsetParams& OutSpawnParams);
@@ -98,4 +103,7 @@ private:
 	void StopAndMoveVertically();
 	UFUNCTION()
 	void StopAndMoveHorizontally();
+
+	UFUNCTION()
+	void Shoot();
 };

@@ -3,6 +3,7 @@
 
 #include "Characters/Enemies/InstancedMasterEnemySquad.h"
 #include "Components/InstancedStaticMeshComponent.h"
+#include "Components/GunComponent.h"
 #include "Structs/ProjectileCollision.h"
 #include "Structs/InstanceStats.h"
 #include "Utils/MovementUtils.h"
@@ -14,6 +15,8 @@ AInstancedMasterEnemySquad::AInstancedMasterEnemySquad()
 	SetRootComponent(EnemyRoot);
 	ISMAlienMesh = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("ISM"));
 	ISMAlienMesh->SetupAttachment(EnemyRoot);
+	GunComponent = CreateDefaultSubobject<UGunComponent>(TEXT("Gun"));
+	GunComponent->SetupAttachment(EnemyRoot);
 }
 
 void AInstancedMasterEnemySquad::BeginPlay()
@@ -34,6 +37,8 @@ void AInstancedMasterEnemySquad::BeginPlay()
 
 	CurrentHorzDirection = FMath::RandBool() ? 1 : -1;
 	HorizontalSpeed = CurrentHorzDirection + DefaultHorizontalSpeed;
+	float TimeToShoot = FMath::RandRange(MinTimeBetweenShots, MaxTimeBetweenShots);
+	GetWorldTimerManager().SetTimer(ShootingTimerHandle, this, &AInstancedMasterEnemySquad::Shoot, TimeToShoot);
 	StopAndMoveHorizontally();
 }
 void AInstancedMasterEnemySquad::GetHit(FProjectileCollision CollisionData)
@@ -49,6 +54,8 @@ void AInstancedMasterEnemySquad::GetHit(FProjectileCollision CollisionData)
 			if (--AliveEnemiesInSquad <= 0) 
 			{
 				//other squad full wipe logic
+				GetWorldTimerManager().ClearTimer(MovementTimerHandle);
+				GetWorldTimerManager().ClearTimer(ShootingTimerHandle);
 				Destroy();
 			}
 		}
@@ -65,7 +72,7 @@ void AInstancedMasterEnemySquad::SpawnInvaderISM(int32 Row, int32 Column)
 	FRotator SpawnLookAt = GetActorRotation() + RotationalOffset; // Can edit Mesh so this is unnecesary
 	FTransform SpawnTransform (SpawnLookAt, SpawnLocation, FVector{ 1.0f });
 	int32 InstanceIndex = ISMAlienMesh->AddInstance(SpawnTransform, true);
-	int32 StatsIndex = PerInstanceStats.Emplace( FInstanceStats{ InstanceIndex,AlienHealth, false, FVector2D(Params.RotationOffset, Params.AltitudeOffset) });
+	PerInstanceStats.Emplace( FInstanceStats{ InstanceIndex,AlienHealth, false, FVector2D(Params.RotationOffset, Params.AltitudeOffset) });
 	AliveEnemiesInSquad++;
 }
 
@@ -93,4 +100,17 @@ void AInstancedMasterEnemySquad::StopAndMoveHorizontally()
 	HorizontalSpeed = DefaultHorizontalSpeed;
 	GetWorldTimerManager().ClearTimer(MovementTimerHandle);
 	GetWorldTimerManager().SetTimer(MovementTimerHandle, this, &AInstancedMasterEnemySquad::StopAndMoveVertically, HorizontalMovementDuration, false);
+}
+void AInstancedMasterEnemySquad::Shoot()
+{
+	int32 RandomIndex = FMath::RandRange(0, PerInstanceStats.Num()-1);
+	if (PerInstanceStats.IsValidIndex(RandomIndex) && !PerInstanceStats[RandomIndex].bIsDead) {
+		float ShootRotation = Rotation + PerInstanceStats[RandomIndex].Offset.X;
+		float ShootAltitude = Altitude + PerInstanceStats[RandomIndex].Offset.Y;
+		FTransform InstanceTransform;
+		ISMAlienMesh->GetInstanceTransform(RandomIndex, InstanceTransform, true);
+	GunComponent->Shoot(ShootRotation, ShootAltitude, InstanceTransform.GetLocation(), ShootingOffset);
+	}
+	float TimeToShoot = FMath::RandRange(MinTimeBetweenShots, MaxTimeBetweenShots);
+	GetWorldTimerManager().SetTimer(ShootingTimerHandle, this, &AInstancedMasterEnemySquad::Shoot, TimeToShoot);
 }
