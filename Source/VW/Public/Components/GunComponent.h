@@ -8,6 +8,8 @@
 #include "GunComponent.generated.h"
 
 class ABaseProjectile;
+class UNiagaraSystem;
+class USoundBase;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class VW_API UGunComponent : public USceneComponent
@@ -36,6 +38,12 @@ private:
 	float HorizontalDirection{0.0f};
 	UPROPERTY(EditAnywhere, Category = "Projectile Variables")
 	float VerticalDirection{ 1.0f };
+	
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	TObjectPtr<UNiagaraSystem> ShootSystem;
+
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	TObjectPtr<USoundBase> ShootAudio;
 
 	TWeakObjectPtr<ABaseProjectile> LastProjectile;
 public:	

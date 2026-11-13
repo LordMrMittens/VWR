@@ -8,6 +8,8 @@
 #include "BaseProjectile.generated.h"
 
 class UStaticMeshComponent;
+class UNiagaraSystem;
+class USoundBase;
 /**
  * 
  */
@@ -34,6 +36,14 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Projectile Stats")
 	FProjectileCollision ProjectileData;
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	TObjectPtr<UNiagaraSystem> HitSystem;
+
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	TObjectPtr<USoundBase> HitAudio;
+
+	UPROPERTY(EditAnywhere, Category = "Effects")
+	TObjectPtr<USoundBase> ProjectileAudio;
 
 	float HorizontalDirection{ 0.0f };
 	float VerticalDirection{ 0.0f };
