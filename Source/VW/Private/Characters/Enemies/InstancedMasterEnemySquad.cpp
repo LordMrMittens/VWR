@@ -25,7 +25,9 @@ void AInstancedMasterEnemySquad::BeginPlay()
 	checkf(IsValid(ISMAlienMesh), TEXT("Enemy Squad has no valid ISM Component"));
 
 	/*float SpawnRotation = bDebugSpawn ? DebugSpawnRotation : FMath::RandRange(0.0f, 360.0f);
-	SetInitialPosition(SpawnRotation, StartingHeight);*/
+	SetInitialPosition(SpawnRotation, StartingHeight);*/ // this should be handled in the spawner class, if ISM not aligned it might ahve to be done in this class instead
+	//as alignment depends on the master being positioned correctly
+	//ISM spawning follows
 
 	for (int32 r = 0; r < NumberOfRows; r++)
 	{

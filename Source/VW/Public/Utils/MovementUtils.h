@@ -37,5 +37,6 @@ namespace MovementUtils
 	float CalculateAltitude(float CurrentAltitude, float VerticalSpeed, float VerticalDirection, float DeltaSeconds);
 	FRotator GetUpdatedLookAt(FVector CurrentLocation, FVector CenterPoint);
 	FVector CalculateUpdatedPosition(float IncomingRotation, float IncomingAltitude, float DistanceFromCenter, FVector CenterPoint);
+	FTransform CalculateInitialTransform(float InitialRotation, float InitialAltitude, float DistanceFromCenter, FVector CenterPoint);
 	
 };
