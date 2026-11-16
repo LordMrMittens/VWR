@@ -45,4 +45,10 @@ namespace MovementUtils
         FVector4 ResultVector = PosMatrix.TransformVector(FVector(0.0f, DistanceFromCenter, IncomingAltitude));
         return FVector(CenterPoint + FVector(ResultVector));
     }
+    FTransform CalculateInitialTransform(float InitialRotation, float InitialAltitude, float DistanceFromCenter, FVector CenterPoint)
+    {
+        FVector InitialLocation = MovementUtils::CalculateUpdatedPosition(InitialRotation, InitialAltitude, DistanceFromCenter, CenterPoint);
+        FRotator InitialLookAt = MovementUtils::GetUpdatedLookAt(InitialLocation, CenterPoint);        
+        return FTransform(InitialLookAt, InitialLocation,FVector(1.0f));
+    }
 }

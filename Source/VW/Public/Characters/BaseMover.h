@@ -19,10 +19,11 @@ public:
 	virtual void Move(float HorizontalDir, float VerticalDir, float DeltaSeconds);
 
 	virtual void Tick(float DeltaTime) override;
-protected:
 
 	void SetInitialPosition(float InitialRotation, float InitialAltitude);
+	void UpdateInitialPositionVariable(float InitialRotation, float InitialAltitude);
 
+protected:
 
 	UPROPERTY(EditAnywhere, Category = "Default Variables")
 	float VerticalSpeed{ 0.0f };

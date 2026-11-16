@@ -24,12 +24,16 @@ void ABaseMover::Move(float HorizontalDir, float VerticalDir, float DeltaSeconds
 
 void ABaseMover::SetInitialPosition(float InitialRotation, float InitialAltitude)
 {
-	Rotation = InitialRotation;
-	Altitude = InitialAltitude;
-
+	UpdateInitialPositionVariable(InitialRotation, InitialAltitude);
 	FVector InitialLocation = MovementUtils::CalculateUpdatedPosition(InitialRotation, InitialAltitude, DistanceFromCenter, CenterPoint);
 	FRotator InitialLookAt = MovementUtils::GetUpdatedLookAt(InitialLocation, CenterPoint);
 	SetActorLocationAndRotation(InitialLocation, InitialLookAt, false, nullptr, ETeleportType::TeleportPhysics);
+}
+
+void ABaseMover::UpdateInitialPositionVariable(float InitialRotation, float InitialAltitude)
+{
+	Rotation = InitialRotation;
+	Altitude = InitialAltitude;
 }
 
 

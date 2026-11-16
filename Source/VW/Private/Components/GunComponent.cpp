@@ -9,19 +9,9 @@ UGunComponent::UGunComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	PrimaryComponentTick.bCanEverTick = false;
 
 	// ...
-}
-
-
-// Called when the game starts
-void UGunComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	// ...
-	
 }
 
 void UGunComponent::Shoot(float Rotation, float Altitude, FVector2D Offset)
@@ -31,17 +21,9 @@ void UGunComponent::Shoot(float Rotation, float Altitude, FVector2D Offset)
 
 void UGunComponent::Shoot(float Rotation, float Altitude, FVector SpawnPoint, FVector2D Offset)
 {
+	if (!IsValid(ProjectileClass)) return;
 	LastProjectile = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, SpawnPoint, GetComponentRotation());
 	if (!LastProjectile.IsValid()) return;
 	LastProjectile->SetupProjectile(Rotation + Offset.X, Altitude + Offset.Y, HorizontalDirection, VerticalDirection);
-}
-
-
-// Called every frame
-void UGunComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	// ...
 }
 

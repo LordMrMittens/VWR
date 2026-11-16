@@ -23,10 +23,6 @@ public:
 	void Shoot(float Rotation, float Altitude, FVector2D Offset = FVector2D(0.0f));
 	void Shoot(float Rotation, float Altitude, FVector SpawnPoint, FVector2D Offset = FVector2D(0.0f));
 
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-
 private:
 	
 	UPROPERTY(EditAnywhere, Category = "Projectile Variables")
@@ -46,9 +42,5 @@ private:
 	TObjectPtr<USoundBase> ShootAudio;
 
 	TWeakObjectPtr<ABaseProjectile> LastProjectile;
-public:	
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
 };
