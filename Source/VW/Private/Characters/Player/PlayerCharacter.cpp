@@ -47,6 +47,12 @@ void APlayerCharacter::Move(float HorizontalDir, float VerticalDir)
 	Move(HorizontalDir, VerticalDir =0.0f, GetWorld()->GetDeltaSeconds());
 }
 
+void APlayerCharacter::GetHit(FProjectileCollision CollisionData)
+{
+	UpdateHealth(CollisionData.Damage);
+	//Audio Visual Feedback
+}
+
 float APlayerCharacter::GetRotation()
 {
 	return Rotation;
@@ -62,5 +68,7 @@ void APlayerCharacter::BeginPlay()
 
 void APlayerCharacter::DeathSequence()
 {
+	OnPlayerDeath.Broadcast();
+	//Other Death Logic
 	this->Destroy();
 }

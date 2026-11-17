@@ -14,6 +14,8 @@ class UBillboardComponent;
 class ABaseProjectile;
 class UGunComponent;
 
+DECLARE_MULTICAST_DELEGATE(FOnPlayerDeath);
+
 UCLASS()
 class VW_API APlayerCharacter : public ABaseMover, public ICharacterInterface
 {
@@ -21,6 +23,8 @@ class VW_API APlayerCharacter : public ABaseMover, public ICharacterInterface
 
 public:
 	
+	FOnPlayerDeath OnPlayerDeath;
+
 	APlayerCharacter();
 
 	virtual void UpdateHealth(int Value) override;
@@ -31,6 +35,8 @@ public:
 	//Kept separate for now as players should never have a vertical direction input, overriding vertical direction with 0.0f unless this changes in the future
 	virtual void Move(float HorizontalDir, float VerticalDir, float DeltaSeconds) override; //Base Move
 	virtual void Move(float HorizontalDir, float VerticalDir) override; // Interface Move
+
+	virtual void GetHit(FProjectileCollision CollisionData) override;
 
 	virtual float GetRotation() override;
 
