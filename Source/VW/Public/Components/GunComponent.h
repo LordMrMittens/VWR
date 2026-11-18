@@ -21,7 +21,6 @@ public:
 	UGunComponent();
 
 	void Shoot(float Rotation, float Altitude, FVector2D Offset = FVector2D(0.0f));
-	void Shoot(float Rotation, float Altitude, FVector SpawnPoint, FVector2D Offset = FVector2D(0.0f));
 
 private:
 	
@@ -36,11 +35,9 @@ private:
 	float VerticalDirection{ 1.0f };
 	
 	UPROPERTY(EditAnywhere, Category = "Effects")
-	TObjectPtr<UNiagaraSystem> ShootSystem;
+	TObjectPtr<UNiagaraSystem> MuzzleFlashSystem;
 
 	UPROPERTY(EditAnywhere, Category = "Effects")
-	TObjectPtr<USoundBase> ShootAudio;
-
-	TWeakObjectPtr<ABaseProjectile> LastProjectile;
+	TObjectPtr<USoundBase> GunshotAudio;
 
 };

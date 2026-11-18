@@ -22,7 +22,6 @@ void UEnemySpawner::Deinitialize()
 
 void UEnemySpawner::SetDefaultVariables(const FVector InCenterPoint, float InDistanceFromCenter, float InSpawnAltitude)
 {
-	UE_LOG(LogTemp, Display, TEXT("Set Default Variables"));
 	CenterPoint = InCenterPoint;
 	DistanceFromCenter = InDistanceFromCenter;
 	SpawnAltitude = InSpawnAltitude;
@@ -30,7 +29,6 @@ void UEnemySpawner::SetDefaultVariables(const FVector InCenterPoint, float InDis
 
 void UEnemySpawner::UpdateWaveSpawningParams(const FWaveSpawnParams& SpawningParameters)
 {
-	UE_LOG(LogTemp, Display, TEXT("Set Spawning Params"));
 	WaveSpawningParameters = SpawningParameters;
 	EnemiesInWave = WaveSpawningParameters.NumberToSpawn;
 	float TimeForNextSpawn = FMath::RandRange(WaveSpawningParameters.MinTimeBetweenSpawns, WaveSpawningParameters.MaxTimeBetweenSpawns);
@@ -41,7 +39,6 @@ void UEnemySpawner::SpawnEnemyAtRandomRotation()
 {
 	if (WaveSpawningParameters.NumberToSpawn-- > 0)
 	{
-		UE_LOG(LogTemp, Display, TEXT("Spawning "));
 		int32 ClassToSpawn = FMath::RandRange(0, WaveSpawningParameters.EnemyClassesToSpawn.Num() - 1);
 		float SpawnRotation = FMath::RandRange(0.0f, 360.0f);
 		FTransform SpawnTransform = MovementUtils::CalculateInitialTransform(SpawnRotation, SpawnAltitude, DistanceFromCenter, CenterPoint);

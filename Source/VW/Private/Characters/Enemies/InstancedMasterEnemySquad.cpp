@@ -69,10 +69,7 @@ void AInstancedMasterEnemySquad::SpawnInvaderISM(int32 Row, int32 Column)
 {
 	FSpawnOffsetParams Params;
 	CalculateInstanceOffset(Row, Column, Params);
-	
-	FVector SpawnLocation = MovementUtils::CalculateUpdatedPosition(Params.SpawnRotation, Params.SpawnAltitude, DistanceFromCenter, CenterPoint);
-	FRotator SpawnLookAt = GetActorRotation() + RotationalOffset; // Can edit Mesh so this is unnecesary
-	FTransform SpawnTransform (SpawnLookAt, SpawnLocation, FVector{ 1.0f });
+	FTransform SpawnTransform = MovementUtils::CalculateInitialTransform(Params.SpawnRotation, Params.SpawnAltitude, DistanceFromCenter, CenterPoint);
 	int32 InstanceIndex = ISMAlienMesh->AddInstance(SpawnTransform, true);
 	PerInstanceStats.Emplace( FInstanceStats{ InstanceIndex,AlienHealth, false, FVector2D(Params.RotationOffset, Params.AltitudeOffset) });
 	AliveEnemiesInSquad++;
@@ -109,9 +106,7 @@ void AInstancedMasterEnemySquad::Shoot()
 	if (PerInstanceStats.IsValidIndex(RandomIndex) && !PerInstanceStats[RandomIndex].bIsDead) {
 		float ShootRotation = Rotation + PerInstanceStats[RandomIndex].Offset.X;
 		float ShootAltitude = Altitude + PerInstanceStats[RandomIndex].Offset.Y;
-		FTransform InstanceTransform;
-		ISMAlienMesh->GetInstanceTransform(RandomIndex, InstanceTransform, true);
-	GunComponent->Shoot(ShootRotation, ShootAltitude, InstanceTransform.GetLocation(), ShootingOffset);
+	GunComponent->Shoot(ShootRotation, ShootAltitude, ShootingOffset);
 	}
 	float TimeToShoot = FMath::RandRange(MinTimeBetweenShots, MaxTimeBetweenShots);
 	GetWorldTimerManager().SetTimer(ShootingTimerHandle, this, &AInstancedMasterEnemySquad::Shoot, TimeToShoot);

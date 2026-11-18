@@ -2,6 +2,9 @@
 
 
 #include "Components/GunComponent.h"
+#include "NiagaraSystem.h"
+#include "Niagara/Public/NiagaraFunctionLibrary.h"
+#include "Utils/MovementUtils.h"
 #include "Projectiles/BaseProjectile.h"
 
 // Sets default values for this component's properties
@@ -16,14 +19,15 @@ UGunComponent::UGunComponent()
 
 void UGunComponent::Shoot(float Rotation, float Altitude, FVector2D Offset)
 {
-	Shoot(Rotation, Altitude, GetComponentLocation(), Offset);
+	if (!IsValid(ProjectileClass) || !MuzzleFlashSystem) return;
+	FTransform SpawnTransform = MovementUtils::CalculateInitialTransform(Rotation + Offset.X, Altitude + Offset.Y, 2000, FVector::ZeroVector);
+	if (ABaseProjectile* LastProjectile = GetWorld()->SpawnActorDeferred<ABaseProjectile>(ProjectileClass, SpawnTransform))
+	{
+		LastProjectile->SetupProjectile(Rotation + Offset.X, Altitude + Offset.Y, HorizontalDirection, VerticalDirection);
+		LastProjectile->FinishSpawning(SpawnTransform);
+		UNiagaraComponent* MuzzleFlash = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), MuzzleFlashSystem, SpawnTransform.GetLocation(), SpawnTransform.Rotator());
+	}
 }
 
-void UGunComponent::Shoot(float Rotation, float Altitude, FVector SpawnPoint, FVector2D Offset)
-{
-	if (!IsValid(ProjectileClass)) return;
-	LastProjectile = GetWorld()->SpawnActor<ABaseProjectile>(ProjectileClass, SpawnPoint, GetComponentRotation());
-	if (!LastProjectile.IsValid()) return;
-	LastProjectile->SetupProjectile(Rotation + Offset.X, Altitude + Offset.Y, HorizontalDirection, VerticalDirection);
-}
+
 

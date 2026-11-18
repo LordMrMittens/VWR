@@ -3,6 +3,8 @@
 
 #include "Projectiles/BaseProjectile.h"
 #include "Characters/Interfaces/CharacterInterface.h"
+#include "NiagaraSystem.h"
+#include "NiagaraFunctionLibrary.h"
 #include "Components/StaticMeshcomponent.h"
 
 
@@ -39,6 +41,7 @@ void ABaseProjectile::OnProjectileOverlaps(AActor* OverlappedActor, AActor* Othe
 		HitActor->GetHit(ProjectileData);
 	}
 	//Spawn VFX SFX
+	UNiagaraComponent* MuzzleFlash = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), HitSystem, GetActorLocation());
 	Destroy();
 }
 
