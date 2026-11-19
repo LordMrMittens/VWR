@@ -2,14 +2,16 @@
 
 
 #include "Characters/BaseMover.h"
+#include "Components/AudioPlayerComponent.h"
 #include "Utils/MovementUtils.h"
 
 // Sets default values
 ABaseMover::ABaseMover()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	AudioPlayerComponent = CreateDefaultSubobject<UAudioPlayerComponent>(TEXT("Audio Player"));
+	AudioPlayerComponent->SetupAttachment(RootComponent);
 }
 
 void ABaseMover::Move(float HorizontalDir, float VerticalDir, float DeltaSeconds)

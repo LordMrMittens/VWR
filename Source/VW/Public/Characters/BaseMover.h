@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 #include "BaseMover.generated.h"
 
+class UAudioPlayerComponent;
+
 UCLASS()
 class VW_API ABaseMover : public APawn
 {
@@ -24,6 +26,9 @@ public:
 	void UpdateInitialPositionVariable(float InitialRotation, float InitialAltitude);
 
 protected:
+
+	UPROPERTY(EditAnywhere, Category = "Default Components")
+	TObjectPtr<UAudioPlayerComponent> AudioPlayerComponent;
 
 	UPROPERTY(EditAnywhere, Category = "Default Variables")
 	float VerticalSpeed{ 0.0f };
