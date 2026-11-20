@@ -20,6 +20,8 @@ public:
 	void PlaySoundOnceDetached(FName AudioTag);
 private:
 
+	USoundBase* FindSound(FName AudioTag);
+
 	UPROPERTY(EditAnywhere, Category = "Audio")
 	TMap<FName, USoundBase*> AvailableAudios;
 
