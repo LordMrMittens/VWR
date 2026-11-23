@@ -11,7 +11,7 @@ ABaseMover::ABaseMover()
 	PrimaryActorTick.bCanEverTick = true;
 
 	AudioPlayerComponent = CreateDefaultSubobject<UAudioPlayerComponent>(TEXT("Audio Player"));
-	AudioPlayerComponent->SetupAttachment(RootComponent);
+	//AudioPlayerComponent->SetupAttachment(RootComponent);
 }
 
 void ABaseMover::Move(float HorizontalDir, float VerticalDir, float DeltaSeconds)
