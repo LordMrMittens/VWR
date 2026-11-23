@@ -3,6 +3,7 @@
 
 #include "Projectiles/BaseProjectile.h"
 #include "Characters/Interfaces/CharacterInterface.h"
+#include "Components/AudioPlayerComponent.h"
 #include "NiagaraSystem.h"
 #include "NiagaraFunctionLibrary.h"
 #include "Components/StaticMeshcomponent.h"
@@ -34,7 +35,7 @@ void ABaseProjectile::OnProjectileOverlaps(AActor* OverlappedActor, AActor* Othe
 
 
 	if (!IsValid(OtherActor)) return;
-
+	AudioPlayerComponent->PlaySoundOnce(FName("Hit"));
 	if(ICharacterInterface* HitActor = Cast<ICharacterInterface>(OtherActor))
 	{
 		ProjectileData.Location = GetActorLocation();

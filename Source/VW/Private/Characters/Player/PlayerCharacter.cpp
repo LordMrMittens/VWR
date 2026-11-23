@@ -2,6 +2,7 @@
 #include "Components/HealthComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/AudioPlayerComponent.h"
 #include "Components/BillboardComponent.h"
 #include "Components/AutoSizeCamera.h"
 #include "Components/GunComponent.h"
@@ -35,6 +36,7 @@ void APlayerCharacter::UpdateHealth(int Value)
 void APlayerCharacter::Shoot()
 {
 	GunComponent->Shoot(Rotation, Altitude, ShootingOffset);
+	AudioPlayerComponent->PlaySoundOnce(FName("Gunshot"));
 }
 
 void APlayerCharacter::Move(float HorizontalDir, float VerticalDir, float DeltaSeconds)
@@ -50,6 +52,7 @@ void APlayerCharacter::Move(float HorizontalDir, float VerticalDir)
 void APlayerCharacter::GetHit(FProjectileCollision CollisionData)
 {
 	UpdateHealth(CollisionData.Damage);
+	AudioPlayerComponent->PlaySoundOnce(FName("Hit"));
 	//Audio Visual Feedback
 }
 
@@ -69,6 +72,7 @@ void APlayerCharacter::BeginPlay()
 void APlayerCharacter::DeathSequence()
 {
 	OnPlayerDeath.Broadcast();
+	AudioPlayerComponent->PlaySoundOnce(FName("Death"));
 	//Other Death Logic
 	this->Destroy();
 }

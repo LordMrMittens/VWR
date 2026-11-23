@@ -4,6 +4,7 @@
 #include "Characters/Enemies/InstancedMasterEnemySquad.h"
 #include "Components/InstancedStaticMeshComponent.h"
 #include "Components/GunComponent.h"
+#include "Components/AudioPlayerComponent.h"
 #include "Structs/ProjectileCollision.h"
 #include "Structs/InstanceStats.h"
 #include "Utils/MovementUtils.h"
@@ -49,9 +50,11 @@ void AInstancedMasterEnemySquad::GetHit(FProjectileCollision CollisionData)
 	for (int32 Index : HitInvadersIndexes)
 	{
 		PerInstanceStats[Index].bIsDead = (PerInstanceStats[Index].Health += CollisionData.Damage) <= 0;
+		AudioPlayerComponent->PlaySoundOnce(FName("Hit"));
 		if (PerInstanceStats[Index].bIsDead)
 		{
 			//SFX and VFX, Score, Items Spawned etc
+			AudioPlayerComponent->PlaySoundOnce(FName("Death"));
 			ISMAlienMesh->UpdateInstanceTransform(Index, FTransform(FRotator::ZeroRotator, FVector::ZeroVector, FVector::ZeroVector), false, true, true);
 			if (--AliveEnemiesInSquad <= 0) 
 			{
@@ -110,4 +113,5 @@ void AInstancedMasterEnemySquad::Shoot()
 	}
 	float TimeToShoot = FMath::RandRange(MinTimeBetweenShots, MaxTimeBetweenShots);
 	GetWorldTimerManager().SetTimer(ShootingTimerHandle, this, &AInstancedMasterEnemySquad::Shoot, TimeToShoot);
+	AudioPlayerComponent->PlaySoundOnce(FName("Gunshot"));
 }
