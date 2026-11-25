@@ -24,6 +24,11 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere, Category = "Default Variables")
+	float CurrentHorzDirection{ 0.0f };
+	UPROPERTY(EditAnywhere, Category = "Default Variables")
+	float CurrentVertDirection{ -1.0f };
+
 private:
 
 	UPROPERTY(EditAnywhere, Category = "Default Components")

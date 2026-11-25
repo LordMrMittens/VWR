@@ -19,7 +19,7 @@ ABaseItem::ABaseItem()
 void ABaseItem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	Move(0, -1, DeltaTime);
+	Move(CurrentHorzDirection, CurrentVertDirection, DeltaTime);
 }
 
 void ABaseItem::BeginPlay()
