@@ -7,6 +7,9 @@
 #include "CharacterInterface.generated.h"
 
 struct FProjectileCollision;
+
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnPlayerDeath, float, float);
+
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
 class UCharacterInterface : public UInterface
@@ -35,5 +38,5 @@ public:
 
 	virtual float GetRotation();
 
-	//virtual FOnPlayerDeath* GetOnPlayerDeathDelegate() { return nullptr; }
+	virtual FOnPlayerDeath* GetOnPlayerDeathDelegate() { return nullptr; }
 };

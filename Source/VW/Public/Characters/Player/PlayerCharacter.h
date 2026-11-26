@@ -14,8 +14,6 @@ class UBillboardComponent;
 class ABaseProjectile;
 class UGunComponent;
 
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnPlayerDeath, float, float);
-
 UCLASS()
 class VW_API APlayerCharacter : public ABaseMover, public ICharacterInterface
 {
@@ -39,6 +37,8 @@ public:
 	virtual void GetHit(FProjectileCollision CollisionData) override;
 
 	virtual float GetRotation() override;
+
+	virtual FOnPlayerDeath* GetOnPlayerDeathDelegate() override;
 
 protected:
 

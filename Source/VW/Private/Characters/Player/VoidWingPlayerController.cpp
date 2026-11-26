@@ -16,16 +16,15 @@ void AVoidWingPlayerController::BeginPlay()
 	{
 		Subsystem->AddMappingContext(InputMappingContext, 0);
 	}
-	FindControlledPawn();
 }
 
-void AVoidWingPlayerController::FindControlledPawn()
+void AVoidWingPlayerController::FindControlledPawn(APawn* PossessedPawn)
 {
-	APawn* ControlledP = GetPawn();
-	if(ControlledP && ControlledP->GetClass()->ImplementsInterface(UCharacterInterface::StaticClass()))
+	if(PossessedPawn && PossessedPawn->GetClass()->ImplementsInterface(UCharacterInterface::StaticClass()))
 	{
-		ControlledPawn = ControlledP;
+		ControlledPawn = PossessedPawn;
 	}
+	checkf(ControlledPawn, TEXT("VoidWingPlayerController: Controlled Pawn Interface Not Found"));
 }
 
 void AVoidWingPlayerController::SetupInputComponent()
@@ -37,21 +36,21 @@ void AVoidWingPlayerController::SetupInputComponent()
 	
 }
 
-void AVoidWingPlayerController::OnPossess(APawn* Pawn)
+void AVoidWingPlayerController::OnPossess(APawn* PossessedPawn)
 {
-	Super::OnPossess(Pawn);
-	if (!ControlledPawn) FindControlledPawn();
-	//this is an edge case, we want a crash if it doesnt have the interface after possession
-	checkf(ControlledPawn, TEXT("VoidWingPlayerController: Controlled Pawn Interface Not Found"));
+	Super::OnPossess(PossessedPawn);
+	FindControlledPawn(PossessedPawn);
+
+
+	ControlledPawn->GetOnPlayerDeathDelegate()->AddUObject(this, &AVoidWingPlayerController::OnPlayerDied);
+}
+
+void AVoidWingPlayerController::OnPlayerDied(float LastRotation, float LastAltitude)
+{
 }
 
 void AVoidWingPlayerController::Move(const FInputActionValue& InputActionValue)
 {
-	if (!ControlledPawn)
-	{
-		FindControlledPawn();
-		return;
-	}
 	FVector2D MovementInputValue = InputActionValue.Get<FVector2D>();
 	ControlledPawn->Move(MovementInputValue.Y, MovementInputValue.X);
 
@@ -59,10 +58,5 @@ void AVoidWingPlayerController::Move(const FInputActionValue& InputActionValue)
 
 void AVoidWingPlayerController::Shoot()
 {
-	if (!ControlledPawn)
-	{
-		FindControlledPawn();
-		return;
-	}
 	ControlledPawn->Shoot();
 }

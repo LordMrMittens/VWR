@@ -39,7 +39,10 @@ private:
 	UPROPERTY()
 	TScriptInterface<ICharacterInterface> ControlledPawn;
 
+	UFUNCTION()
+	void OnPlayerDied(float LastRotation, float LastAltitude);
+
 	void Move(const FInputActionValue& InputActionValue);
 	void Shoot();
-	void FindControlledPawn();
+	void FindControlledPawn(APawn* PossessedPawn);
 };

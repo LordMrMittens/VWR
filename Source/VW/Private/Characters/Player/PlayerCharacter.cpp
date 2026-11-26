@@ -61,6 +61,11 @@ float APlayerCharacter::GetRotation()
 	return Rotation;
 }
 
+FOnPlayerDeath* APlayerCharacter::GetOnPlayerDeathDelegate()
+{
+	return &OnPlayerDeath;
+}
+
 void APlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
