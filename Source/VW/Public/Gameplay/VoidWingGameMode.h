@@ -32,6 +32,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Enemy Spawning")
 	FWaveSpawnParams InitialWave;
+	UPROPERTY(EditAnywhere, Category = "Enemy Spawning")
+	float DefaultAltitude{ 2500.0f };
 
 	UPROPERTY(VisibleAnywhere, Category = "Enemy Spawning")
 	TObjectPtr<UEnemySpawner>EnemySpawner;
@@ -41,4 +43,8 @@ protected:
 private:
 	UPROPERTY(EditAnywhere, Category = "Player Spawning")
 	float RespawnDelay{ 3.0f };
+	UPROPERTY(EditAnywhere, Category = "Player Spawning")
+	float DistanceToCenter{ 2000.0f };
+	UPROPERTY(EditAnywhere, Category = "Player Spawning")
+	FVector CenterPoint{ 0.0f };
 };

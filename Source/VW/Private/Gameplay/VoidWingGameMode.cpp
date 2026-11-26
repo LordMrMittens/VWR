@@ -14,7 +14,7 @@ void AVoidWingGameMode::BeginPlay()
 		EnemySpawner = World->GetSubsystem<UEnemySpawner>();
 		if (EnemySpawner)
 		{
-			EnemySpawner->SetDefaultVariables(FVector::ZeroVector, 2000.f, 2500.f);
+			EnemySpawner->SetDefaultVariables(FVector::ZeroVector, DistanceToCenter, DefaultAltitude);
 			EnemySpawner->UpdateWaveSpawningParams(InitialWave);
 		}
 	}
@@ -34,7 +34,7 @@ void AVoidWingGameMode::OnPlayerDeath(float LastRotation, float LastAltitude)
 
 void AVoidWingGameMode::RespawnPlayer(float LastRotation, float LastAltitude)
 {
-	FTransform DeathTransform = MovementUtils::CalculateInitialTransform(LastRotation, LastAltitude, 2000, FVector::ZeroVector);
+	FTransform DeathTransform = MovementUtils::CalculateInitialTransform(LastRotation, LastAltitude, DistanceToCenter, CenterPoint);
 	APlayerCharacter* PlayerActor = GetWorld()->SpawnActorDeferred<APlayerCharacter>(DefaultPawnClass, DeathTransform);
 
 	if (!IsValid(PlayerActor)) return;
