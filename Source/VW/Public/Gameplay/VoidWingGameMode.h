@@ -23,14 +23,22 @@ public:
 
 	UFUNCTION()
 	virtual void OnPlayerDeath(float LastRotation, float LastAltitude) override;
+	UFUNCTION()
+	void RespawnPlayer(float LastRotation, float LastAltitude);
 
 protected:
 
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, Category = "Spawning")
+	UPROPERTY(EditAnywhere, Category = "Enemy Spawning")
 	FWaveSpawnParams InitialWave;
 
-	UPROPERTY(VisibleAnywhere, Category = "Spawning")
+	UPROPERTY(VisibleAnywhere, Category = "Enemy Spawning")
 	TObjectPtr<UEnemySpawner>EnemySpawner;
+
+	FTimerHandle PlayerRespawnTimerHandle;
+
+private:
+	UPROPERTY(EditAnywhere, Category = "Player Spawning")
+	float RespawnDelay{ 3.0f };
 };

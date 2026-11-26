@@ -4,6 +4,8 @@
 #include "Characters/Player/VoidWingPlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "EnhancedInputComponent.h"
+#include "Gameplay/Interfaces/GameModeInterface.h"
+#include "GameFramework/GameModeBase.h"
 #include "InputMappingContext.h"
 #include "Characters/BaseMover.h"
 
@@ -47,6 +49,10 @@ void AVoidWingPlayerController::OnPossess(APawn* PossessedPawn)
 
 void AVoidWingPlayerController::OnPlayerDied(float LastRotation, float LastAltitude)
 {
+	if (IGameModeInterface* VWGameMode = Cast<IGameModeInterface>(GetWorld()->GetAuthGameMode()))
+	{
+		VWGameMode->OnPlayerDeath(LastRotation, LastAltitude);
+	}
 }
 
 void AVoidWingPlayerController::Move(const FInputActionValue& InputActionValue)

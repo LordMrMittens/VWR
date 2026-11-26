@@ -2,11 +2,9 @@
 
 
 #include "Gameplay/VoidWingGameMode.h"
+#include "Utils/MovementUtils.h"
+#include "Characters/Player/PlayerCharacter.h"
 #include "Gameplay/EnemySpawner.h"
-
-void AVoidWingGameMode::OnPlayerDeath(float LastRotation, float LastAltitude)
-{
-}
 
 void AVoidWingGameMode::BeginPlay()
 {
@@ -21,3 +19,29 @@ void AVoidWingGameMode::BeginPlay()
 		}
 	}
 }
+
+void AVoidWingGameMode::OnPlayerDeath(float LastRotation, float LastAltitude)
+{
+	FTimerDelegate RespawnDelegate = FTimerDelegate::CreateUObject(
+		this,
+		&AVoidWingGameMode::RespawnPlayer,
+		LastRotation,
+		LastAltitude
+	);
+
+	GetWorldTimerManager().SetTimer(PlayerRespawnTimerHandle, RespawnDelegate, RespawnDelay, false);
+}
+
+void AVoidWingGameMode::RespawnPlayer(float LastRotation, float LastAltitude)
+{
+	FTransform DeathTransform = MovementUtils::CalculateInitialTransform(LastRotation, LastAltitude, 2000, FVector::ZeroVector);
+	APlayerCharacter* PlayerActor = GetWorld()->SpawnActorDeferred<APlayerCharacter>(DefaultPawnClass, DeathTransform);
+
+	if (!IsValid(PlayerActor)) return;
+
+	PlayerActor->UpdateInitialPositionVariable(LastRotation, LastAltitude);
+	PlayerActor->FinishSpawning(DeathTransform);
+	//do we need to possess
+}
+
+
