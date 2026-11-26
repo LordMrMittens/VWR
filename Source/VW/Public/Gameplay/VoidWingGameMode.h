@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "Structs/WaveSpawnParams.h"
+#include "Gameplay/Interfaces/GameModeInterface.h"
 #include "VoidWingGameMode.generated.h"
 
 class UEnemySpawner;
@@ -15,10 +16,13 @@ struct FWaveSpawnParams;
  */
 
 UCLASS()
-class VW_API AVoidWingGameMode : public AGameModeBase
+class VW_API AVoidWingGameMode : public AGameModeBase, public IGameModeInterface
 {
 	GENERATED_BODY()
-	
+public:
+
+	UFUNCTION()
+	virtual void OnPlayerDeath(float LastRotation, float LastAltitude) override;
 
 protected:
 

@@ -37,6 +37,14 @@ void AVoidWingPlayerController::SetupInputComponent()
 	
 }
 
+void AVoidWingPlayerController::OnPossess(APawn* Pawn)
+{
+	Super::OnPossess(Pawn);
+	if (!ControlledPawn) FindControlledPawn();
+	//this is an edge case, we want a crash if it doesnt have the interface after possession
+	checkf(ControlledPawn, TEXT("VoidWingPlayerController: Controlled Pawn Interface Not Found"));
+}
+
 void AVoidWingPlayerController::Move(const FInputActionValue& InputActionValue)
 {
 	if (!ControlledPawn)

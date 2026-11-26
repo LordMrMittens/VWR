@@ -14,7 +14,7 @@ class UBillboardComponent;
 class ABaseProjectile;
 class UGunComponent;
 
-DECLARE_MULTICAST_DELEGATE(FOnPlayerDeath);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnPlayerDeath, float, float);
 
 UCLASS()
 class VW_API APlayerCharacter : public ABaseMover, public ICharacterInterface

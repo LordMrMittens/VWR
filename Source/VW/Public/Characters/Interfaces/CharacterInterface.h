@@ -34,4 +34,6 @@ public:
 	virtual void Move(float HorizontalDir, float VerticalDir);
 
 	virtual float GetRotation();
+
+	//virtual FOnPlayerDeath* GetOnPlayerDeathDelegate() { return nullptr; }
 };

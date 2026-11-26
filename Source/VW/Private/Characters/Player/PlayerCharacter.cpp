@@ -71,8 +71,8 @@ void APlayerCharacter::BeginPlay()
 
 void APlayerCharacter::DeathSequence()
 {
-	OnPlayerDeath.Broadcast();
-	AudioPlayerComponent->PlaySoundOnce(FName("Death"));
+	OnPlayerDeath.Broadcast(Rotation, Altitude);
+	if (IsValid(AudioPlayerComponent)) AudioPlayerComponent->PlaySoundOnce(FName("Death"));
 	//Other Death Logic
 	this->Destroy();
 }
