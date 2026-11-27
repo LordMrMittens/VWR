@@ -45,4 +45,15 @@ private:
 	void Move(const FInputActionValue& InputActionValue);
 	void Shoot();
 	void FindControlledPawn(APawn* PossessedPawn);
+
+	//****** Debug *******
+
+	UPROPERTY(EditAnywhere, Category = "Debug")
+	TObjectPtr<UInputAction> DebugDamageAction;
+	UPROPERTY(EditAnywhere, Category = "Debug")
+	int32 DebugDamage{ -1 };
+	UFUNCTION()
+	void DebugDamagePlayer();
+
+	//****** Debug *******
 };

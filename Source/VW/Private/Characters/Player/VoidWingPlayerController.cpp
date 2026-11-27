@@ -7,6 +7,7 @@
 #include "Gameplay/Interfaces/GameModeInterface.h"
 #include "GameFramework/GameModeBase.h"
 #include "InputMappingContext.h"
+#include "Structs/ProjectileCollision.h"
 #include "Characters/BaseMover.h"
 
 void AVoidWingPlayerController::BeginPlay()
@@ -29,13 +30,15 @@ void AVoidWingPlayerController::FindControlledPawn(APawn* PossessedPawn)
 	checkf(ControlledPawn, TEXT("VoidWingPlayerController: Controlled Pawn Interface Not Found"));
 }
 
+
+
 void AVoidWingPlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(InputComponent);
 	EnhancedInputComponent->BindAction(MovementAction, ETriggerEvent::Triggered, this, &AVoidWingPlayerController::Move);
 	EnhancedInputComponent->BindAction(ShootAction, ETriggerEvent::Started, this, &AVoidWingPlayerController::Shoot);
-	
+	EnhancedInputComponent->BindAction(DebugDamageAction, ETriggerEvent::Started, this, &AVoidWingPlayerController::DebugDamagePlayer);
 }
 
 void AVoidWingPlayerController::OnPossess(APawn* PossessedPawn)
@@ -65,4 +68,12 @@ void AVoidWingPlayerController::Move(const FInputActionValue& InputActionValue)
 void AVoidWingPlayerController::Shoot()
 {
 	ControlledPawn->Shoot();
+}
+
+
+void AVoidWingPlayerController::DebugDamagePlayer()
+{
+	FProjectileCollision Collision;
+	Collision.Damage = DebugDamage;
+	ControlledPawn->GetHit(Collision);
 }
